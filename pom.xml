@@ -26,6 +26,8 @@
 		<module>public-info</module>
 		<module>transfer</module>
 		<module>eureka-service</module>
+		<module>eureka-client</module>
+		<module>api-gateway</module>
 	</modules>
 
 	<properties>
