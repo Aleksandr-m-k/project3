@@ -7,9 +7,9 @@ import java.util.List;
 
 
 public interface AccountTransferRepository extends JpaRepository<AccountTransfer, Long> {
-        @Override
-        AccountTransfer findByAccountNumber(Long accountNumber);
-        @Override
-        List<AccountTransfer> findAll();
+//        @Override
+//        AccountTransfer findByAccountNumber(Long accountNumber);
+//        @Override
+//        List<AccountTransfer> findAll();
 
 }
