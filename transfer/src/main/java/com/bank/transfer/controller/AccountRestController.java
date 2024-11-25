@@ -1,18 +1,62 @@
 package com.bank.transfer.controller;
 
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.bank.transfer.entity.AccountTransfer;
+import com.bank.transfer.service.AccountTransferService;
+import liquibase.pro.packaged.V;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/account/")
+@RequestMapping("/account")
 public class AccountRestController {
+    private final AccountTransferService accountTransferService;
 
-    @GetMapping()
-        public String hello (){
-        return "привет создатель";
+    @Autowired
+    public AccountRestController(AccountTransferService accountTransferService) {
+        this.accountTransferService = accountTransferService;
     }
 
+    @GetMapping("/{number}")
+    public ResponseEntity<AccountTransfer> getAccountTransferByNumber(@PathVariable Long number) {
+        AccountTransfer accountTransfer = accountTransferService.findTransferByAccountTransfer(number);
 
+        if (accountTransfer == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(accountTransfer, HttpStatus.OK);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<AccountTransfer>> getAccountTransfer() {
+        List<AccountTransfer> accountTransfers = accountTransferService.allAccountTransfer();
+
+        if (accountTransfers.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+
+        return new ResponseEntity<>(accountTransfers, HttpStatus.OK);
+    }
+
+    @PostMapping("/newAccountTransfer")
+    public ResponseEntity<Void> addNewAccountTransfer(@RequestBody AccountTransfer accountTransfer) {
+        accountTransferService.saveAccountTransfer(accountTransfer);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<HttpStatus> updateAccountTransfer(@RequestBody AccountTransfer accountTransfer,
+                                                            @PathVariable("id") long id) {
+        accountTransferService.update(accountTransfer, id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAccountTransfer(@PathVariable long id){
+        accountTransferService.deleteAccountTransfer(id);
+        return ResponseEntity.ok().build();
+    }
 }

@@ -48,6 +48,8 @@ public class Audit {
     @Column(name = "entity_json")
     private String entityJson;
 
+    public Audit() {
+    }
 
     public Audit(String entityType, String operationType, String createdBy,
                  String modifiedBy, LocalDateTime createdAt, LocalDateTime modifiedAt,
@@ -60,5 +62,92 @@ public class Audit {
         this.modifiedAt = modifiedAt;
         this.newEntityJson = newEntityJson;
         this.entityJson = entityJson;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getEntityType() {
+        return entityType;
+    }
+
+    public void setEntityType(String entityType) {
+        this.entityType = entityType;
+    }
+
+    public String getOperationType() {
+        return operationType;
+    }
+
+    public void setOperationType(String operationType) {
+        this.operationType = operationType;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getModifiedBy() {
+        return modifiedBy;
+    }
+
+    public void setModifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getModifiedAt() {
+        return modifiedAt;
+    }
+
+    public void setModifiedAt(LocalDateTime modifiedAt) {
+        this.modifiedAt = modifiedAt;
+    }
+
+    public String getNewEntityJson() {
+        return newEntityJson;
+    }
+
+    public void setNewEntityJson(String newEntityJson) {
+        this.newEntityJson = newEntityJson;
+    }
+
+    public String getEntityJson() {
+        return entityJson;
+    }
+
+    public void setEntityJson(String entityJson) {
+        this.entityJson = entityJson;
+    }
+
+    @Override
+    public String toString() {
+        return "Audit{" +
+                "id=" + id +
+                ", entityType='" + entityType + '\'' +
+                ", operationType='" + operationType + '\'' +
+                ", createdBy='" + createdBy + '\'' +
+                ", modifiedBy='" + modifiedBy + '\'' +
+                ", createdAt=" + createdAt +
+                ", modifiedAt=" + modifiedAt +
+                ", newEntityJson='" + newEntityJson + '\'' +
+                ", entityJson='" + entityJson + '\'' +
+                '}';
     }
 }
