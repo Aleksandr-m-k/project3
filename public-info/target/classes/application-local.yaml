@@ -1,10 +1,10 @@
 server:
-  port: 0
+  port: 8091
   servlet:
-    context-path: /api/profile
+    context-path: /api/public-info
 management:
   server:
-    port: 8189
+    port: 8190
   endpoint:
     shutdown:
       enabled: true
@@ -18,9 +18,9 @@ spring:
     username: user
     password: password
   liquibase:
-    default-schema: profile
+    default-schema: public_bank_information
     change-log: db/changelog/db.changelog-master.yaml
     enabled: true
     drop-first: false
   application:
-    name: profile-app
+    name: public-info-app

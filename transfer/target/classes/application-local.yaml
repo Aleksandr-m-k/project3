@@ -1,10 +1,10 @@
 server:
-  port: 0
+  port: 8092
   servlet:
-    context-path: /api/profile
+    context-path: /api/transfer
 management:
   server:
-    port: 8189
+    port: 8191
   endpoint:
     shutdown:
       enabled: true
@@ -17,10 +17,18 @@ spring:
     url: jdbc:postgresql://localhost:5432/postgres
     username: user
     password: password
+#убрать три строчки
+  jpa:
+    hibernate:
+      ddl-auto: update
   liquibase:
-    default-schema: profile
+    default-schema: transfer
     change-log: db/changelog/db.changelog-master.yaml
-    enabled: true
+    enabled: false
     drop-first: false
   application:
-    name: profile-app
+    name: transfer-app
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka

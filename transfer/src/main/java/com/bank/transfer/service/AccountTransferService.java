@@ -1,17 +1,19 @@
 package com.bank.transfer.service;
 
 import com.bank.transfer.entity.AccountTransfer;
-import com.bank.transfer.repository.AccountTransferRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public interface AccountTransferService{
-    AccountTransfer findTransferByAccountTransfer (Long AccountNumber);
-    AccountTransfer getTransferById(long id);
+public interface AccountTransferService {
+    AccountTransfer findTransferByAccountNumber(Long AccountNumber);
+    Optional <AccountTransfer> getAccountTransferById(Long id);
+
     List<AccountTransfer> allAccountTransfer();
-    void saveAccountTransfer(AccountTransfer accountTransfer);
-    AccountTransfer update (AccountTransfer accountTransfer, long accountNumber);
-    void deleteAccountTransfer (Long id);
-    }
+
+    AccountTransfer saveOrUpdateAccountTransfer(AccountTransfer accountTransfer);
+
+    void deleteAccountTransfer(Long id);
+}

@@ -1,15 +1,10 @@
 package com.bank.transfer.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "phone_transfer")
+@Table(name = "phone_transfer",  schema = "transfer")
 //@ToString
 //@Setter
 //@Getter
