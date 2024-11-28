@@ -26,8 +26,6 @@
 		<module>public-info</module>
 		<module>transfer</module>
 		<module>eureka-service</module>
-		<module>eureka-client</module>
-		<module>api-gateway</module>
 	</modules>
 
 	<properties>
@@ -96,6 +94,8 @@
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 			<version>${cloud.starter.version}</version>
 		</dependency>
+
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

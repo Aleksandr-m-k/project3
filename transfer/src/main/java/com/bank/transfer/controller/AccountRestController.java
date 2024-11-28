@@ -3,6 +3,7 @@ package com.bank.transfer.controller;
 
 import com.bank.transfer.entity.AccountTransfer;
 import com.bank.transfer.service.AccountTransferService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,8 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@Tag(name="main_methods")
 @RestController
 @RequestMapping("/account")
+
 public class AccountRestController {
     private final AccountTransferService accountTransferService;
 
@@ -31,7 +34,7 @@ public class AccountRestController {
     @GetMapping("/byNumber/{number}")
     public ResponseEntity<AccountTransfer> getAccountTransferByNumber(@PathVariable Long number) {
         AccountTransfer accountTransfer = accountTransferService.findTransferByAccountNumber(number);
-            return new ResponseEntity<>(accountTransfer, HttpStatus.OK);
+        return new ResponseEntity<>(accountTransfer, HttpStatus.OK);
     }
 
     @GetMapping("/")
