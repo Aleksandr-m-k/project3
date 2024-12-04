@@ -4,9 +4,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import java.util.List;
 
@@ -14,9 +12,9 @@ import java.util.List;
 @Configuration
 public class SwaggerTransferConfig {
     @Bean
-    public OpenAPI openAPI(){
+    public OpenAPI openAPI() {
         return new OpenAPI().servers(List.of(new Server()
-                .url("http://localhost:8092")))
+                        .url("http://localhost:8092")))
                 .info(new Info().title("Transfers API"));
     }
 }

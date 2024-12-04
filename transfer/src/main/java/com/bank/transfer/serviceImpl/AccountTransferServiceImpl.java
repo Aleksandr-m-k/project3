@@ -21,7 +21,7 @@ public class AccountTransferServiceImpl implements AccountTransferService {
 
     @Override
     @Transactional
-    public Optional <AccountTransfer> getAccountTransferById(Long id) {
+    public Optional<AccountTransfer> getAccountTransferById(Long id) {
         return accountTransferRepository.findById(id);
     }
 
@@ -37,10 +37,28 @@ public class AccountTransferServiceImpl implements AccountTransferService {
         return accountTransferRepository.findAll();
     }
 
+
     @Override
     @Transactional
-    public AccountTransfer saveOrUpdateAccountTransfer(AccountTransfer accountTransfer) {
-        return accountTransferRepository.saveAndFlush(accountTransfer);
+    public AccountTransfer saveAccountTransfer(AccountTransfer accountTransfer) {
+        return accountTransferRepository.save(accountTransfer);
+    }
+
+
+    @Override
+    @Transactional
+    public AccountTransfer updateAccountTransferById(AccountTransfer accountTransferToUpdate, long id) {
+        Optional<AccountTransfer> optionalAccountTransfer = getAccountTransferById(id);
+
+        // Проверяем, присутствует ли значение
+        AccountTransfer accountTransfer = optionalAccountTransfer.orElseThrow(() ->
+                new IllegalArgumentException("AccountTransfer not found for id: " + id));
+
+        accountTransfer.setAccountNumber(accountTransferToUpdate.getAccountNumber());
+        accountTransfer.setAmount(accountTransferToUpdate.getAmount());
+        accountTransfer.setPurpose(accountTransferToUpdate.getPurpose());
+        accountTransfer.setAccountDetailsId(accountTransferToUpdate.getAccountDetailsId());
+        return accountTransfer;
     }
 
     @Override

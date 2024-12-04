@@ -5,7 +5,15 @@ import com.bank.transfer.service.CardTransferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,9 +36,9 @@ public class CardRestController {
 
     @GetMapping("/byCard/{number}")
     public ResponseEntity<CardTransfer> getCardTransferByNumber(@PathVariable Long number) {
-        CardTransfer cardTransfer=cardTransferService.findTransferByCardNumber(number);
-     return new ResponseEntity<>(cardTransfer,HttpStatus.OK);
-        }
+        CardTransfer cardTransfer = cardTransferService.findTransferByCardNumber(number);
+        return new ResponseEntity<>(cardTransfer, HttpStatus.OK);
+    }
 
     @GetMapping("/")
     public ResponseEntity<List<CardTransfer>> getCardTransfer() {
@@ -45,15 +53,14 @@ public class CardRestController {
 
     @PostMapping("/")
     public ResponseEntity<Void> addNewCardTransfer(@RequestBody CardTransfer cardTransfer) {
-        cardTransferService.saveOrUpdateCardTransfer(cardTransfer);
+        cardTransferService.saveCardTransfer(cardTransfer);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 
-    @PutMapping("/")
-    public ResponseEntity<HttpStatus> updateCardTransfer(@RequestBody CardTransfer cardTransfer) {
-        cardTransferService.saveOrUpdateCardTransfer(cardTransfer);
-        return new ResponseEntity<>(HttpStatus.OK);
+    @PutMapping("/{id}")
+    public CardTransfer updateCardTransfer(@RequestBody CardTransfer cardTransfer, @PathVariable("id") long id) {
+        return cardTransferService.updateCardTransferById(cardTransfer, id);
     }
 
     @DeleteMapping("/{id}")

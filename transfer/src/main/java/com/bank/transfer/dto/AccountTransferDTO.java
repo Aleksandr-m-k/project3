@@ -1,68 +1,31 @@
 package com.bank.transfer.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 
 public class AccountTransferDTO {
-    private Long accountNumber;
 
-    private BigDecimal amount;
-
-    private String purpose;
-
-    private Long accountDetailsId;
-
-    public AccountTransferDTO(Long accountNumber,
-                              BigDecimal amount, String purpose, Long accountDetailsId) {
-        this.accountNumber = accountNumber;
-        this.amount = amount;
-        this.purpose = purpose;
-        this.accountDetailsId = accountDetailsId;
-    }
-
-//    public Long getAccountNumber() {
-//        return accountNumber;
-//    }
+//    private Long id;
 //
-//    public void setAccountNumber(Long accountNumber) {
-//        this.accountNumber = accountNumber;
-//    }
+//    private String entityType;
 //
-//    public BigDecimal getAmount() {
-//        return amount;
-//    }
+//    private String operationType;
 //
-//    public void setAmount(BigDecimal amount) {
-//        this.amount = amount;
-//    }
+//    private String createdBy;
 //
-//    public String getPurpose() {
-//        return purpose;
-//    }
+//    private String modifiedBy;
 //
-//    public void setPurpose(String purpose) {
-//        this.purpose = purpose;
-//    }
+//    private LocalDateTime createdAt;
 //
-//    public Long getAccountDetailsId() {
-//        return accountDetailsId;
-//    }
+//    private LocalDateTime modifiedAt;
 //
-//    public void setAccountDetailsId(Long accountDetailsId) {
-//        this.accountDetailsId = accountDetailsId;
-//    }
-
-    @Override
-    public String toString() {
-        return "AccountTransferDTO{" +
-                "accountNumber=" + accountNumber +
-                ", amount=" + amount +
-                ", purpose='" + purpose + '\'' +
-                ", accountDetailsId=" + accountDetailsId +
-                '}';
-    }
+//    private String newEntityJson;
+//
+//    private String entityJson;
 
 }

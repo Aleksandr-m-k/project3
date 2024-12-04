@@ -17,7 +17,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/postgres
     username: user
     password: password
-#убрать три строчки
+  #убрать три строчки
   jpa:
     hibernate:
       ddl-auto: update
