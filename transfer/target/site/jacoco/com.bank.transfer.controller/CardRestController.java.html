@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CardRestController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">transfer</a> &gt; <a href="index.source.html" class="el_package">com.bank.transfer.controller</a> &gt; <span class="el_source">CardRestController.java</span></div><h1>CardRestController.java</h1><pre class="source lang-java linenums">package com.bank.transfer.controller;
+
+import com.bank.transfer.entity.CardTransfer;
+import com.bank.transfer.service.CardTransferService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping(&quot;/card&quot;)
+public class CardRestController {
+    private final CardTransferService cardTransferService;
+
+    @Autowired
+<span class="nc" id="L27">    public CardRestController(CardTransferService cardTransferService) {</span>
+<span class="nc" id="L28">        this.cardTransferService = cardTransferService;</span>
+<span class="nc" id="L29">    }</span>
+
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Optional&lt;CardTransfer&gt;&gt; getCardTransferById(@PathVariable Long id) {
+<span class="nc" id="L33">        Optional&lt;CardTransfer&gt; cardTransfer = cardTransferService.getCardTransferById(id);</span>
+<span class="nc" id="L34">        return new ResponseEntity&lt;&gt;(cardTransfer, HttpStatus.OK);</span>
+    }
+
+    @GetMapping(&quot;/byCard/{number}&quot;)
+    public ResponseEntity&lt;CardTransfer&gt; getCardTransferByNumber(@PathVariable Long number) {
+<span class="nc" id="L39">        CardTransfer cardTransfer = cardTransferService.findTransferByCardNumber(number);</span>
+<span class="nc" id="L40">        return new ResponseEntity&lt;&gt;(cardTransfer, HttpStatus.OK);</span>
+    }
+
+    @GetMapping(&quot;/&quot;)
+    public ResponseEntity&lt;List&lt;CardTransfer&gt;&gt; getCardTransfer() {
+<span class="nc" id="L45">        List&lt;CardTransfer&gt; cardTransfers = cardTransferService.allCardTransfer();</span>
+
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        if (cardTransfers.isEmpty()) {</span>
+<span class="nc" id="L48">            return new ResponseEntity&lt;&gt;(HttpStatus.NO_CONTENT);</span>
+        }
+
+<span class="nc" id="L51">        return new ResponseEntity&lt;&gt;(cardTransfers, HttpStatus.OK);</span>
+    }
+
+    @PostMapping(&quot;/&quot;)
+    public ResponseEntity&lt;Void&gt; addNewCardTransfer(@RequestBody CardTransfer cardTransfer) {
+<span class="nc" id="L56">        cardTransferService.saveCardTransfer(cardTransfer);</span>
+<span class="nc" id="L57">        return new ResponseEntity&lt;&gt;(HttpStatus.CREATED);</span>
+    }
+
+
+    @PutMapping(&quot;/{id}&quot;)
+    public CardTransfer updateCardTransfer(@RequestBody CardTransfer cardTransfer, @PathVariable(&quot;id&quot;) long id) {
+<span class="nc" id="L63">        return cardTransferService.updateCardTransferById(cardTransfer, id);</span>
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Void&gt; deleteCardTransfer(@PathVariable long id) {
+<span class="nc" id="L68">        cardTransferService.deleteCardTransfer(id);</span>
+<span class="nc" id="L69">        return ResponseEntity.ok().build();</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

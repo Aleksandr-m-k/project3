@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PhoneRestController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">transfer</a> &gt; <a href="index.source.html" class="el_package">com.bank.transfer.controller</a> &gt; <span class="el_source">PhoneRestController.java</span></div><h1>PhoneRestController.java</h1><pre class="source lang-java linenums">package com.bank.transfer.controller;
+
+import com.bank.transfer.entity.CardTransfer;
+import com.bank.transfer.entity.PhoneTransfer;
+import com.bank.transfer.service.PhoneTransferService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping(&quot;/phone&quot;)
+public class PhoneRestController {
+    private final PhoneTransferService phoneTransferService;
+
+    @Autowired
+<span class="nc" id="L27">    public PhoneRestController(PhoneTransferService phoneTransferService) {</span>
+<span class="nc" id="L28">        this.phoneTransferService = phoneTransferService;</span>
+<span class="nc" id="L29">    }</span>
+
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Optional&lt;PhoneTransfer&gt;&gt; getPhoneTransferById(@PathVariable Long id) {
+<span class="nc" id="L33">        Optional&lt;PhoneTransfer&gt; phoneTransfer = phoneTransferService.getPhoneTransferById(id);</span>
+<span class="nc" id="L34">        return new ResponseEntity&lt;&gt;(phoneTransfer, HttpStatus.OK);</span>
+    }
+
+    @GetMapping(&quot;/byPhone/{number}&quot;)
+    public ResponseEntity&lt;PhoneTransfer&gt; getPhoneTransferByNumber(@PathVariable Long number) {
+<span class="nc" id="L39">        PhoneTransfer PhoneTransfer = phoneTransferService.findTransferbyPhoneNumber(number);</span>
+<span class="nc" id="L40">        return new ResponseEntity&lt;&gt;(PhoneTransfer, HttpStatus.OK);</span>
+    }
+
+    @GetMapping(&quot;/&quot;)
+    public ResponseEntity&lt;List&lt;PhoneTransfer&gt;&gt; getPhoneTransfer() {
+<span class="nc" id="L45">        List&lt;PhoneTransfer&gt; phoneTransfers = phoneTransferService.allPhoneTransfer();</span>
+
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        if (phoneTransfers.isEmpty()) {</span>
+<span class="nc" id="L48">            return new ResponseEntity&lt;&gt;(HttpStatus.NO_CONTENT);</span>
+        }
+
+<span class="nc" id="L51">        return new ResponseEntity&lt;&gt;(phoneTransfers, HttpStatus.OK);</span>
+    }
+
+    @PostMapping(&quot;/&quot;)
+    public ResponseEntity&lt;Void&gt; addNewPhoneTransfer(@RequestBody PhoneTransfer phoneTransfer) {
+<span class="nc" id="L56">        phoneTransferService.savePhoneTransfer(phoneTransfer);</span>
+<span class="nc" id="L57">        return new ResponseEntity&lt;&gt;(HttpStatus.CREATED);</span>
+    }
+    @PutMapping(&quot;/{id}&quot;)
+    public PhoneTransfer updatePhoneTransfer(@RequestBody PhoneTransfer phoneTransfer, @PathVariable(&quot;id&quot;) long id) {
+<span class="nc" id="L61">        return phoneTransferService.updatePhoneTransferById(phoneTransfer, id);</span>
+    }
+
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;Void&gt; deletePhoneTransfer(@PathVariable long id) {
+<span class="nc" id="L67">        phoneTransferService.deletePhoneTransfer(id);</span>
+<span class="nc" id="L68">        return ResponseEntity.ok().build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
