@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Entity
@@ -25,13 +26,16 @@ public class PhoneTransfer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Column(name = "phone_number")
     private Long phoneNumber;
 
+    @NotNull
     private BigDecimal amount;
 
     private String purpose;
 
+    @NotNull
     @Column(name = "account_details_id")
     private Long accountDetailsId;
 

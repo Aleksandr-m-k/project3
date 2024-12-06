@@ -1,9 +1,8 @@
 package com.bank.transfer.controller;
 
 
-import com.bank.transfer.aspects.AuditTransferAspect;
+import com.bank.transfer.aspects.AuditAspect;
 import com.bank.transfer.entity.AccountTransfer;
-import com.bank.transfer.entity.PhoneTransfer;
 import com.bank.transfer.service.AccountTransferService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,12 +26,12 @@ import java.util.Optional;
 
 public class AccountRestController {
     private final AccountTransferService accountTransferService;
-    private final AuditTransferAspect auditTransferAspect;
+    private final AuditAspect auditAspect;
 
     @Autowired
-    public AccountRestController(AccountTransferService accountTransferService, AuditTransferAspect auditTransferAspect) {
+    public AccountRestController(AccountTransferService accountTransferService, AuditAspect auditAspect) {
         this.accountTransferService = accountTransferService;
-        this.auditTransferAspect = auditTransferAspect;
+        this.auditAspect = auditAspect;
     }
 
 
@@ -61,8 +59,8 @@ public class AccountRestController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Void> saveAccountTransfer(@RequestBody AccountTransfer accountTransfer,@PathVariable("id") long id) {
-        accountTransferService.updateAccountTransferByIdd(accountTransfer, id);
+    public ResponseEntity<Void> addAccountTransfer(@RequestBody AccountTransfer accountTransfer) {
+        accountTransferService.saveAccountTransfer(accountTransfer);
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
