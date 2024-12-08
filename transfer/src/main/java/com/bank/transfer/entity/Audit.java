@@ -54,7 +54,6 @@ public class Audit {
     private String entityJson;
 
 
-
     @Builder
     public Audit(String entityType, String operationType, String createdBy,
                  String modifiedBy, LocalDateTime createdAt, LocalDateTime modifiedAt,

@@ -37,19 +37,19 @@ public class AccountRestController {
 
     @GetMapping(&quot;/{id}&quot;)
     public ResponseEntity&lt;Optional&lt;AccountTransfer&gt;&gt; getAccountTransferById(@PathVariable Long id) {
-<span class="nc" id="L40">        Optional&lt;AccountTransfer&gt; accountTransfer = accountTransferService.getAccountTransferById(id);</span>
+<span class="nc" id="L40">        final Optional&lt;AccountTransfer&gt; accountTransfer = accountTransferService.getAccountTransferById(id);</span>
 <span class="nc" id="L41">        return new ResponseEntity&lt;&gt;(accountTransfer, HttpStatus.OK);</span>
     }
 
     @GetMapping(&quot;/byNumber/{number}&quot;)
     public ResponseEntity&lt;AccountTransfer&gt; getAccountTransferByNumber(@PathVariable Long number) {
-<span class="nc" id="L46">        AccountTransfer accountTransfer = accountTransferService.findTransferByAccountNumber(number);</span>
+<span class="nc" id="L46">        final AccountTransfer accountTransfer = accountTransferService.findTransferByAccountNumber(number);</span>
 <span class="nc" id="L47">        return new ResponseEntity&lt;&gt;(accountTransfer, HttpStatus.OK);</span>
     }
 
     @GetMapping(&quot;/&quot;)
     public ResponseEntity&lt;List&lt;AccountTransfer&gt;&gt; getAccountTransfer() {
-<span class="nc" id="L52">        List&lt;AccountTransfer&gt; accountTransfers = accountTransferService.allAccountTransfer();</span>
+<span class="nc" id="L52">        final List&lt;AccountTransfer&gt; accountTransfers = accountTransferService.allAccountTransfer();</span>
 
 <span class="nc bnc" id="L54" title="All 2 branches missed.">        if (accountTransfers.isEmpty()) {</span>
 <span class="nc" id="L55">            return new ResponseEntity&lt;&gt;(HttpStatus.NO_CONTENT);</span>
@@ -67,15 +67,16 @@ public class AccountRestController {
 
 
     @PutMapping(&quot;/{id}&quot;)
-    public AccountTransfer updateAccountTransfer(@RequestBody AccountTransfer accountTransfer, @PathVariable(&quot;id&quot;) long id) {
-<span class="nc" id="L71">        return accountTransferService.updateAccountTransferById(accountTransfer, id);</span>
+    public AccountTransfer updateAccountTransfer(@RequestBody AccountTransfer accountTransfer,
+                                                 @PathVariable(&quot;id&quot;) long id) {
+<span class="nc" id="L72">        return accountTransferService.updateAccountTransferById(accountTransfer, id);</span>
 
     }
 
     @DeleteMapping(&quot;/{id}&quot;)
     public ResponseEntity&lt;Void&gt; deleteAccountTransfer(@PathVariable long id) {
-<span class="nc" id="L77">        accountTransferService.deleteAccountTransfer(id);</span>
-<span class="nc" id="L78">        return ResponseEntity.noContent().build();</span>
+<span class="nc" id="L78">        accountTransferService.deleteAccountTransfer(id);</span>
+<span class="nc" id="L79">        return ResponseEntity.noContent().build();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

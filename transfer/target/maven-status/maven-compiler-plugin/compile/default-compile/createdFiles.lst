@@ -15,6 +15,7 @@ com/bank/transfer/repository/PhoneTransferRepository.class
 com/bank/transfer/repository/AuditRepository.class
 com/bank/transfer/repository/AccountTransferRepository.class
 com/bank/transfer/aspects/AuditAspect.class
+com/bank/transfer/entity/AccountTransfer$AccountTransferBuilder.class
 com/bank/transfer/controller/PhoneRestController.class
 com/bank/transfer/serviceImpl/PhoneTransferServiceImpl.class
 com/bank/transfer/entity/Audit.class

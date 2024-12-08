@@ -1,6 +1,5 @@
 package com.bank.transfer.service;
 
-import com.bank.transfer.entity.AccountTransfer;
 import com.bank.transfer.entity.CardTransfer;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +15,8 @@ public interface CardTransferService {
     List<CardTransfer> allCardTransfer();
 
     CardTransfer saveCardTransfer(CardTransfer cardTransfer);
-    CardTransfer updateCardTransferById(CardTransfer cardTransfer,long id);
+
+    CardTransfer updateCardTransferById(CardTransfer cardTransfer, long id);
 
     void deleteCardTransfer(Long id);
 }

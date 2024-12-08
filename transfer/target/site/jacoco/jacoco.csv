@@ -11,7 +11,8 @@ transfer,com.bank.transfer.serviceImpl,PhoneTransferServiceImpl,67,0,0,0,17,0,8,
 transfer,com.bank.transfer,TransferApplication,8,0,0,0,3,0,2,0,2,0
 transfer,com.bank.transfer.config,SwaggerTransferConfig,20,0,0,0,4,0,2,0,2,0
 transfer,com.bank.transfer.entity,CardTransfer,65,0,0,0,14,0,13,0,13,0
-transfer,com.bank.transfer.entity,AccountTransfer,65,0,0,0,14,0,13,0,13,0
+transfer,com.bank.transfer.entity,AccountTransfer.AccountTransferBuilder,10,35,0,0,0,1,1,6,1,6
+transfer,com.bank.transfer.entity,AccountTransfer,0,69,0,0,0,15,0,14,0,14
 transfer,com.bank.transfer.entity,Audit,117,0,0,0,23,0,22,0,22,0
 transfer,com.bank.transfer.entity,Audit.AuditBuilder,81,0,0,0,1,0,11,0,11,0
 transfer,com.bank.transfer.entity,PhoneTransfer,65,0,0,0,14,0,13,0,13,0

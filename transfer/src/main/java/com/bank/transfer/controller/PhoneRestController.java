@@ -1,6 +1,5 @@
 package com.bank.transfer.controller;
 
-import com.bank.transfer.entity.CardTransfer;
 import com.bank.transfer.entity.PhoneTransfer;
 import com.bank.transfer.service.PhoneTransferService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,19 +29,19 @@ public class PhoneRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<PhoneTransfer>> getPhoneTransferById(@PathVariable Long id) {
-        Optional<PhoneTransfer> phoneTransfer = phoneTransferService.getPhoneTransferById(id);
+        final Optional<PhoneTransfer> phoneTransfer = phoneTransferService.getPhoneTransferById(id);
         return new ResponseEntity<>(phoneTransfer, HttpStatus.OK);
     }
 
     @GetMapping("/byPhone/{number}")
     public ResponseEntity<PhoneTransfer> getPhoneTransferByNumber(@PathVariable Long number) {
-        PhoneTransfer PhoneTransfer = phoneTransferService.findTransferbyPhoneNumber(number);
-        return new ResponseEntity<>(PhoneTransfer, HttpStatus.OK);
+        final PhoneTransfer phoneTransfer = phoneTransferService.findTransferbyPhoneNumber(number);
+        return new ResponseEntity<>(phoneTransfer, HttpStatus.OK);
     }
 
     @GetMapping("/")
     public ResponseEntity<List<PhoneTransfer>> getPhoneTransfer() {
-        List<PhoneTransfer> phoneTransfers = phoneTransferService.allPhoneTransfer();
+        final List<PhoneTransfer> phoneTransfers = phoneTransferService.allPhoneTransfer();
 
         if (phoneTransfers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -56,8 +55,10 @@ public class PhoneRestController {
         phoneTransferService.savePhoneTransfer(phoneTransfer);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
     @PutMapping("/{id}")
-    public PhoneTransfer updatePhoneTransfer(@RequestBody PhoneTransfer phoneTransfer, @PathVariable("id") long id) {
+    public PhoneTransfer updatePhoneTransfer(@RequestBody PhoneTransfer phoneTransfer,
+                                             @PathVariable("id") long id) {
         return phoneTransferService.updatePhoneTransferById(phoneTransfer, id);
     }
 

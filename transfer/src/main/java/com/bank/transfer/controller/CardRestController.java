@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -30,19 +29,19 @@ public class CardRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<CardTransfer>> getCardTransferById(@PathVariable Long id) {
-        Optional<CardTransfer> cardTransfer = cardTransferService.getCardTransferById(id);
+        final Optional<CardTransfer> cardTransfer = cardTransferService.getCardTransferById(id);
         return new ResponseEntity<>(cardTransfer, HttpStatus.OK);
     }
 
     @GetMapping("/byCard/{number}")
     public ResponseEntity<CardTransfer> getCardTransferByNumber(@PathVariable Long number) {
-        CardTransfer cardTransfer = cardTransferService.findTransferByCardNumber(number);
+        final CardTransfer cardTransfer = cardTransferService.findTransferByCardNumber(number);
         return new ResponseEntity<>(cardTransfer, HttpStatus.OK);
     }
 
     @GetMapping("/")
     public ResponseEntity<List<CardTransfer>> getCardTransfer() {
-        List<CardTransfer> cardTransfers = cardTransferService.allCardTransfer();
+        final List<CardTransfer> cardTransfers = cardTransferService.allCardTransfer();
 
         if (cardTransfers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -59,7 +58,8 @@ public class CardRestController {
 
 
     @PutMapping("/{id}")
-    public CardTransfer updateCardTransfer(@RequestBody CardTransfer cardTransfer, @PathVariable("id") long id) {
+    public CardTransfer updateCardTransfer(@RequestBody CardTransfer cardTransfer,
+                                           @PathVariable("id") long id) {
         return cardTransferService.updateCardTransferById(cardTransfer, id);
     }
 

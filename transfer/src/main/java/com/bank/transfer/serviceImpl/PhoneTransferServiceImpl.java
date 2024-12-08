@@ -1,6 +1,5 @@
 package com.bank.transfer.serviceImpl;
 
-import com.bank.transfer.entity.CardTransfer;
 import com.bank.transfer.entity.PhoneTransfer;
 import com.bank.transfer.repository.PhoneTransferRepository;
 import com.bank.transfer.service.PhoneTransferService;
@@ -8,14 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.Column;
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class PhoneTransferServiceImpl implements PhoneTransferService {
-    private PhoneTransferRepository phoneTransferRepository;
+    private final PhoneTransferRepository phoneTransferRepository;
 
     @Autowired
     public PhoneTransferServiceImpl(PhoneTransferRepository phoneTransferRepository) {
@@ -50,10 +47,10 @@ public class PhoneTransferServiceImpl implements PhoneTransferService {
     @Override
     @Transactional
     public PhoneTransfer updatePhoneTransferById(PhoneTransfer phoneTransferToUpdate, long id) {
-        Optional<PhoneTransfer> optionalPhoneTransfer = getPhoneTransferById(id);
+        final  Optional<PhoneTransfer> optionalPhoneTransfer = getPhoneTransferById(id);
 
         // Проверяем, присутствует ли значение
-        PhoneTransfer phoneTransfer = optionalPhoneTransfer.orElseThrow(() ->
+        final PhoneTransfer phoneTransfer = optionalPhoneTransfer.orElseThrow(() ->
                 new IllegalArgumentException("CardTransfer not found for id: " + id));
         phoneTransfer.setPhoneNumber(phoneTransferToUpdate.getPhoneNumber());
         phoneTransfer.setAmount(phoneTransferToUpdate.getAmount());

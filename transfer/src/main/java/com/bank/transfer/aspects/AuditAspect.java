@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 @Component
 @Aspect
 public class AuditAspect {
+    private static final String OPERATION_TYPE_CREATE = "CREATE";
     private final AuditRepository auditRepository; // Репозиторий для аудита
     private final ObjectMapper objectMapper; // ObjectMapper для преобразования в JSON
 
@@ -37,7 +38,7 @@ public class AuditAspect {
 
     @AfterReturning(value = "createMethod()", returning = "result")
     public void runSaveMethods(Object result) {
-        Long id = extractId(result);
+        final Long id = extractId(result);
         String jsonString = null;
         try {
             jsonString = objectMapper.writeValueAsString(result);
@@ -45,9 +46,9 @@ public class AuditAspect {
             e.printStackTrace(); // Обработка исключения
         }
 
-        Audit audit = Audit.builder()
+        final Audit audit = Audit.builder()
                 .entityType(result.getClass().getSimpleName())
-                .operationType("CREATE")
+                .operationType(OPERATION_TYPE_CREATE)
                 .createdBy(String.valueOf(id))
                 .createdAt(LocalDateTime.now())
                 .entityJson(jsonString)
@@ -59,19 +60,20 @@ public class AuditAspect {
 
     @AfterReturning(value = "updateMethod()", returning = "result")
     public void runUpdateMethods(Object result) {
-        String entityType = result.getClass().getSimpleName();
+        final String entityType = result.getClass().getSimpleName();
         String jsonString = null;
-        Long id = extractId(result);
+        final Long id = extractId(result);
         try {
             jsonString = objectMapper.writeValueAsString(result);
         } catch (JsonProcessingException e) {
             e.printStackTrace(); // Обработка исключения
         }
-        String createByString = String.valueOf(id);
-        Audit audit = auditRepository.findByCreatedByAndOperationType(createByString, "CREATE");
+        final String createByString = String.valueOf(id);
+        final Audit audit = auditRepository.findByCreatedByAndOperationType(createByString,
+                OPERATION_TYPE_CREATE);
 
 
-        Audit updateAudit = Audit.builder()
+        final Audit updateAudit = Audit.builder()
                 .entityType(entityType)
                 .operationType("UPDATE")
                 .createdBy(audit.getCreatedBy())
@@ -85,6 +87,7 @@ public class AuditAspect {
         auditRepository.save(updateAudit);
         System.out.println(updateAudit);
     }
+
     private Long extractId(Object result) {
         if (result instanceof AccountTransfer) {
             return ((AccountTransfer) result).getId();

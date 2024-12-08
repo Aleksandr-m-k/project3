@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,42 +23,43 @@ public class CardRestController {
     private final CardTransferService cardTransferService;
 
     @Autowired
-<span class="nc" id="L27">    public CardRestController(CardTransferService cardTransferService) {</span>
-<span class="nc" id="L28">        this.cardTransferService = cardTransferService;</span>
-<span class="nc" id="L29">    }</span>
+<span class="nc" id="L26">    public CardRestController(CardTransferService cardTransferService) {</span>
+<span class="nc" id="L27">        this.cardTransferService = cardTransferService;</span>
+<span class="nc" id="L28">    }</span>
 
     @GetMapping(&quot;/{id}&quot;)
     public ResponseEntity&lt;Optional&lt;CardTransfer&gt;&gt; getCardTransferById(@PathVariable Long id) {
-<span class="nc" id="L33">        Optional&lt;CardTransfer&gt; cardTransfer = cardTransferService.getCardTransferById(id);</span>
-<span class="nc" id="L34">        return new ResponseEntity&lt;&gt;(cardTransfer, HttpStatus.OK);</span>
+<span class="nc" id="L32">        final Optional&lt;CardTransfer&gt; cardTransfer = cardTransferService.getCardTransferById(id);</span>
+<span class="nc" id="L33">        return new ResponseEntity&lt;&gt;(cardTransfer, HttpStatus.OK);</span>
     }
 
     @GetMapping(&quot;/byCard/{number}&quot;)
     public ResponseEntity&lt;CardTransfer&gt; getCardTransferByNumber(@PathVariable Long number) {
-<span class="nc" id="L39">        CardTransfer cardTransfer = cardTransferService.findTransferByCardNumber(number);</span>
-<span class="nc" id="L40">        return new ResponseEntity&lt;&gt;(cardTransfer, HttpStatus.OK);</span>
+<span class="nc" id="L38">        final CardTransfer cardTransfer = cardTransferService.findTransferByCardNumber(number);</span>
+<span class="nc" id="L39">        return new ResponseEntity&lt;&gt;(cardTransfer, HttpStatus.OK);</span>
     }
 
     @GetMapping(&quot;/&quot;)
     public ResponseEntity&lt;List&lt;CardTransfer&gt;&gt; getCardTransfer() {
-<span class="nc" id="L45">        List&lt;CardTransfer&gt; cardTransfers = cardTransferService.allCardTransfer();</span>
+<span class="nc" id="L44">        final List&lt;CardTransfer&gt; cardTransfers = cardTransferService.allCardTransfer();</span>
 
-<span class="nc bnc" id="L47" title="All 2 branches missed.">        if (cardTransfers.isEmpty()) {</span>
-<span class="nc" id="L48">            return new ResponseEntity&lt;&gt;(HttpStatus.NO_CONTENT);</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        if (cardTransfers.isEmpty()) {</span>
+<span class="nc" id="L47">            return new ResponseEntity&lt;&gt;(HttpStatus.NO_CONTENT);</span>
         }
 
-<span class="nc" id="L51">        return new ResponseEntity&lt;&gt;(cardTransfers, HttpStatus.OK);</span>
+<span class="nc" id="L50">        return new ResponseEntity&lt;&gt;(cardTransfers, HttpStatus.OK);</span>
     }
 
     @PostMapping(&quot;/&quot;)
     public ResponseEntity&lt;Void&gt; addNewCardTransfer(@RequestBody CardTransfer cardTransfer) {
-<span class="nc" id="L56">        cardTransferService.saveCardTransfer(cardTransfer);</span>
-<span class="nc" id="L57">        return new ResponseEntity&lt;&gt;(HttpStatus.CREATED);</span>
+<span class="nc" id="L55">        cardTransferService.saveCardTransfer(cardTransfer);</span>
+<span class="nc" id="L56">        return new ResponseEntity&lt;&gt;(HttpStatus.CREATED);</span>
     }
 
 
     @PutMapping(&quot;/{id}&quot;)
-    public CardTransfer updateCardTransfer(@RequestBody CardTransfer cardTransfer, @PathVariable(&quot;id&quot;) long id) {
+    public CardTransfer updateCardTransfer(@RequestBody CardTransfer cardTransfer,
+                                           @PathVariable(&quot;id&quot;) long id) {
 <span class="nc" id="L63">        return cardTransferService.updateCardTransferById(cardTransfer, id);</span>
     }
 

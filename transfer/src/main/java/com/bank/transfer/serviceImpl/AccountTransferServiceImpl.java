@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 public class AccountTransferServiceImpl implements AccountTransferService {
-    private AccountTransferRepository accountTransferRepository;
+    private final AccountTransferRepository accountTransferRepository;
 
     @Autowired
     public AccountTransferServiceImpl(AccountTransferRepository accountTransferRepository) {
@@ -48,10 +48,10 @@ public class AccountTransferServiceImpl implements AccountTransferService {
     @Override
     @Transactional
     public AccountTransfer updateAccountTransferById(AccountTransfer accountTransferToUpdate, long id) {
-        Optional<AccountTransfer> optionalAccountTransfer = getAccountTransferById(id);
+        final  Optional<AccountTransfer> optionalAccountTransfer = getAccountTransferById(id);
 
         // Проверяем, присутствует ли значение
-        AccountTransfer accountTransfer = optionalAccountTransfer.orElseThrow(() ->
+        final  AccountTransfer accountTransfer = optionalAccountTransfer.orElseThrow(() ->
                 new IllegalArgumentException("AccountTransfer not found for id: " + id));
 
         accountTransfer.setAccountNumber(accountTransferToUpdate.getAccountNumber());

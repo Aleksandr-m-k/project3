@@ -37,19 +37,19 @@ public class AccountRestController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Optional<AccountTransfer>> getAccountTransferById(@PathVariable Long id) {
-        Optional<AccountTransfer> accountTransfer = accountTransferService.getAccountTransferById(id);
+        final Optional<AccountTransfer> accountTransfer = accountTransferService.getAccountTransferById(id);
         return new ResponseEntity<>(accountTransfer, HttpStatus.OK);
     }
 
     @GetMapping("/byNumber/{number}")
     public ResponseEntity<AccountTransfer> getAccountTransferByNumber(@PathVariable Long number) {
-        AccountTransfer accountTransfer = accountTransferService.findTransferByAccountNumber(number);
+        final AccountTransfer accountTransfer = accountTransferService.findTransferByAccountNumber(number);
         return new ResponseEntity<>(accountTransfer, HttpStatus.OK);
     }
 
     @GetMapping("/")
     public ResponseEntity<List<AccountTransfer>> getAccountTransfer() {
-        List<AccountTransfer> accountTransfers = accountTransferService.allAccountTransfer();
+        final List<AccountTransfer> accountTransfers = accountTransferService.allAccountTransfer();
 
         if (accountTransfers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -67,7 +67,8 @@ public class AccountRestController {
 
 
     @PutMapping("/{id}")
-    public AccountTransfer updateAccountTransfer(@RequestBody AccountTransfer accountTransfer, @PathVariable("id") long id) {
+    public AccountTransfer updateAccountTransfer(@RequestBody AccountTransfer accountTransfer,
+                                                 @PathVariable("id") long id) {
         return accountTransferService.updateAccountTransferById(accountTransfer, id);
 
     }

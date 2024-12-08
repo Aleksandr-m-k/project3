@@ -15,7 +15,8 @@ public interface AccountTransferService {
     List<AccountTransfer> allAccountTransfer();
 
     AccountTransfer saveAccountTransfer(AccountTransfer accountTransfer);
-    AccountTransfer updateAccountTransferById(AccountTransfer accountTransfer,long id);
+
+    AccountTransfer updateAccountTransferById(AccountTransfer accountTransfer, long id);
 
     void deleteAccountTransfer(Long id);
 }

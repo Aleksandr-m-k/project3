@@ -1,5 +1,6 @@
 package com.bank.transfer.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,6 +39,7 @@ public class AccountTransfer {
     @Column(name = "account_details_id")
     private Long accountDetailsId;
 
+    @Builder
     public AccountTransfer(Long accountNumber, BigDecimal amount,
                            String purpose, Long accountDetailsId) {
         this.accountNumber = accountNumber;
