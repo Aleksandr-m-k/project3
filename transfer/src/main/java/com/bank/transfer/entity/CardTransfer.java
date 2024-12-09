@@ -1,5 +1,6 @@
 package com.bank.transfer.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +21,7 @@ import java.math.BigDecimal;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class CardTransfer {
 
     @Id
@@ -36,15 +38,15 @@ public class CardTransfer {
     private String purpose;
 
     @NotNull
-    @Column(name = "account_details_id")
-    private Long accountDetailsId;
+    @Column(name = "card_details_id")
+    private Long cardDetailsId;
 
 
-    public CardTransfer(Long cardNumber, BigDecimal amount, String purpose, Long accountDetailsId) {
+    public CardTransfer(Long cardNumber, BigDecimal amount, String purpose, Long cardDetailsId) {
         this.cardNumber = cardNumber;
         this.amount = amount;
         this.purpose = purpose;
-        this.accountDetailsId = accountDetailsId;
+        this.cardDetailsId = cardDetailsId;
     }
 
 }

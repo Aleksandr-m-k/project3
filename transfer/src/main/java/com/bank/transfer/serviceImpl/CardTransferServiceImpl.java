@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,16 +47,19 @@ public class CardTransferServiceImpl implements CardTransferService {
     @Override
     @Transactional
     public CardTransfer updateCardTransferById(CardTransfer cardTransferToUpdate, long id) {
+        if (cardTransferToUpdate == null) {
+            throw new IllegalArgumentException("CardTransfer to update cannot be null");
+        }
+
         final Optional<CardTransfer> optionalCardTransfer = getCardTransferById(id);
 
-        // Проверяем, присутствует ли значение
         final CardTransfer cardTransfer = optionalCardTransfer.orElseThrow(() ->
-                new IllegalArgumentException("CardTransfer not found for id: " + id));
+                new EntityNotFoundException("CardTransfer not found for id: " + id));
 
         cardTransfer.setCardNumber(cardTransferToUpdate.getCardNumber());
         cardTransfer.setAmount(cardTransferToUpdate.getAmount());
         cardTransfer.setPurpose(cardTransferToUpdate.getPurpose());
-        cardTransfer.setAccountDetailsId(cardTransferToUpdate.getAccountDetailsId());
+        cardTransfer.setCardDetailsId(cardTransferToUpdate.getCardDetailsId());
 
         return cardTransfer;
     }

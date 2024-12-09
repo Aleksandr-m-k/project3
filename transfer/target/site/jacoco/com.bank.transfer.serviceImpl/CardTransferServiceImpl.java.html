@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,57 +16,60 @@ public class CardTransferServiceImpl implements CardTransferService {
     private final CardTransferRepository cardTransferRepository;
 
     @Autowired
-<span class="nc" id="L18">    public CardTransferServiceImpl(CardTransferRepository cardTransferRepository) {</span>
-<span class="nc" id="L19">        this.cardTransferRepository = cardTransferRepository;</span>
-<span class="nc" id="L20">    }</span>
+<span class="fc" id="L19">    public CardTransferServiceImpl(CardTransferRepository cardTransferRepository) {</span>
+<span class="fc" id="L20">        this.cardTransferRepository = cardTransferRepository;</span>
+<span class="fc" id="L21">    }</span>
 
     @Override
     @Transactional
     public Optional&lt;CardTransfer&gt; getCardTransferById(Long id) {
-<span class="nc" id="L25">        return cardTransferRepository.findById(id);</span>
+<span class="fc" id="L26">        return cardTransferRepository.findById(id);</span>
     }
 
     @Override
     @Transactional
     public CardTransfer findTransferByCardNumber(Long cardNumber) {
-<span class="nc" id="L31">        return cardTransferRepository.findByCardNumber(cardNumber);</span>
+<span class="fc" id="L32">        return cardTransferRepository.findByCardNumber(cardNumber);</span>
     }
 
     @Override
     @Transactional
     public List&lt;CardTransfer&gt; allCardTransfer() {
-<span class="nc" id="L37">        return cardTransferRepository.findAll();</span>
+<span class="fc" id="L38">        return cardTransferRepository.findAll();</span>
     }
 
     @Override
     @Transactional
     public CardTransfer saveCardTransfer(CardTransfer cardTransfer) {
-<span class="nc" id="L43">        return cardTransferRepository.save(cardTransfer);</span>
+<span class="fc" id="L44">        return cardTransferRepository.save(cardTransfer);</span>
     }
 
     @Override
     @Transactional
     public CardTransfer updateCardTransferById(CardTransfer cardTransferToUpdate, long id) {
-<span class="nc" id="L49">        final Optional&lt;CardTransfer&gt; optionalCardTransfer = getCardTransferById(id);</span>
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        if (cardTransferToUpdate == null) {</span>
+<span class="fc" id="L51">            throw new IllegalArgumentException(&quot;CardTransfer to update cannot be null&quot;);</span>
+        }
 
-        // Проверяем, присутствует ли значение
-<span class="nc" id="L52">        final CardTransfer cardTransfer = optionalCardTransfer.orElseThrow(() -&gt;</span>
-<span class="nc" id="L53">                new IllegalArgumentException(&quot;CardTransfer not found for id: &quot; + id));</span>
+<span class="fc" id="L54">        final Optional&lt;CardTransfer&gt; optionalCardTransfer = getCardTransferById(id);</span>
 
-<span class="nc" id="L55">        cardTransfer.setCardNumber(cardTransferToUpdate.getCardNumber());</span>
-<span class="nc" id="L56">        cardTransfer.setAmount(cardTransferToUpdate.getAmount());</span>
-<span class="nc" id="L57">        cardTransfer.setPurpose(cardTransferToUpdate.getPurpose());</span>
-<span class="nc" id="L58">        cardTransfer.setAccountDetailsId(cardTransferToUpdate.getAccountDetailsId());</span>
+<span class="fc" id="L56">        final CardTransfer cardTransfer = optionalCardTransfer.orElseThrow(() -&gt;</span>
+<span class="nc" id="L57">                new EntityNotFoundException(&quot;CardTransfer not found for id: &quot; + id));</span>
 
-<span class="nc" id="L60">        return cardTransfer;</span>
+<span class="fc" id="L59">        cardTransfer.setCardNumber(cardTransferToUpdate.getCardNumber());</span>
+<span class="fc" id="L60">        cardTransfer.setAmount(cardTransferToUpdate.getAmount());</span>
+<span class="fc" id="L61">        cardTransfer.setPurpose(cardTransferToUpdate.getPurpose());</span>
+<span class="fc" id="L62">        cardTransfer.setCardDetailsId(cardTransferToUpdate.getCardDetailsId());</span>
+
+<span class="fc" id="L64">        return cardTransfer;</span>
     }
 
 
     @Override
     @Transactional
     public void deleteCardTransfer(Long id) {
-<span class="nc" id="L67">        cardTransferRepository.deleteById(id);</span>
-<span class="nc" id="L68">    }</span>
+<span class="fc" id="L71">        cardTransferRepository.deleteById(id);</span>
+<span class="fc" id="L72">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

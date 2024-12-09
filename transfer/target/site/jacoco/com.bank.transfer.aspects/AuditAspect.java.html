@@ -58,35 +58,35 @@ public class AuditAspect {
 <span class="nc" id="L58">        System.out.println(&quot;Audit saved: &quot; + audit);</span>
 <span class="nc" id="L59">    }</span>
 
-    @AfterReturning(value = &quot;updateMethod()&quot;, returning = &quot;result&quot;)
-    public void runUpdateMethods(Object result) {
-<span class="nc" id="L63">        final String entityType = result.getClass().getSimpleName();</span>
-<span class="nc" id="L64">        String jsonString = null;</span>
-<span class="nc" id="L65">        final Long id = extractId(result);</span>
-        try {
-<span class="nc" id="L67">            jsonString = objectMapper.writeValueAsString(result);</span>
-<span class="nc" id="L68">        } catch (JsonProcessingException e) {</span>
-<span class="nc" id="L69">            e.printStackTrace(); // Обработка исключения</span>
-<span class="nc" id="L70">        }</span>
-<span class="nc" id="L71">        final String createByString = String.valueOf(id);</span>
-<span class="nc" id="L72">        final Audit audit = auditRepository.findByCreatedByAndOperationType(createByString,</span>
-                OPERATION_TYPE_CREATE);
-
-
-<span class="nc" id="L76">        final Audit updateAudit = Audit.builder()</span>
-<span class="nc" id="L77">                .entityType(entityType)</span>
-<span class="nc" id="L78">                .operationType(&quot;UPDATE&quot;)</span>
-<span class="nc" id="L79">                .createdBy(audit.getCreatedBy())</span>
-<span class="nc" id="L80">                .modifiedBy(String.valueOf(id))</span>
-<span class="nc" id="L81">                .createdAt(audit.getCreatedAt())</span>
-<span class="nc" id="L82">                .modifiedAt(LocalDateTime.now())</span>
-<span class="nc" id="L83">                .newEntityJson(jsonString)</span>
-<span class="nc" id="L84">                .entityJson(audit.getEntityJson())</span>
-<span class="nc" id="L85">                .build();</span>
-
-<span class="nc" id="L87">        auditRepository.save(updateAudit);</span>
-<span class="nc" id="L88">        System.out.println(updateAudit);</span>
-<span class="nc" id="L89">    }</span>
+//    @AfterReturning(value = &quot;updateMethod()&quot;, returning = &quot;result&quot;)
+//    public void runUpdateMethods(Object result) {
+//        final String entityType = result.getClass().getSimpleName();
+//        String jsonString = null;
+//        final Long id = extractId(result);
+//        try {
+//            jsonString = objectMapper.writeValueAsString(result);
+//        } catch (JsonProcessingException e) {
+//            e.printStackTrace(); // Обработка исключения
+//        }
+//        final String createByString = String.valueOf(id);
+//        final Audit audit = auditRepository.findByCreatedByAndOperationType(createByString,
+//                OPERATION_TYPE_CREATE);
+//
+//
+//        final Audit updateAudit = Audit.builder()
+//                .entityType(entityType)
+//                .operationType(&quot;UPDATE&quot;)
+//                .createdBy(audit.getCreatedBy())
+//                .modifiedBy(String.valueOf(id))
+//                .createdAt(audit.getCreatedAt())
+//                .modifiedAt(LocalDateTime.now())
+//                .newEntityJson(jsonString)
+//                .entityJson(audit.getEntityJson())
+//                .build();
+//
+//        auditRepository.save(updateAudit);
+//        System.out.println(updateAudit);
+//    }
 
     private Long extractId(Object result) {
 <span class="nc bnc" id="L92" title="All 2 branches missed.">        if (result instanceof AccountTransfer) {</span>

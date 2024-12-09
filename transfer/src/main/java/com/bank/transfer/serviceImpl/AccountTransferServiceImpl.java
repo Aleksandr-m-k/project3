@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,16 +49,21 @@ public class AccountTransferServiceImpl implements AccountTransferService {
     @Override
     @Transactional
     public AccountTransfer updateAccountTransferById(AccountTransfer accountTransferToUpdate, long id) {
-        final  Optional<AccountTransfer> optionalAccountTransfer = getAccountTransferById(id);
+        if (accountTransferToUpdate == null) {
+            throw new IllegalArgumentException("AccountTransfer to update cannot be null");
+        }
 
-        // Проверяем, присутствует ли значение
-        final  AccountTransfer accountTransfer = optionalAccountTransfer.orElseThrow(() ->
-                new IllegalArgumentException("AccountTransfer not found for id: " + id));
+        final Optional<AccountTransfer> optionalAccountTransfer = getAccountTransferById(id);
+
+        final AccountTransfer accountTransfer = optionalAccountTransfer.orElseThrow(() ->
+                new EntityNotFoundException("AccountTransfer not found for id: " + id));
+
 
         accountTransfer.setAccountNumber(accountTransferToUpdate.getAccountNumber());
         accountTransfer.setAmount(accountTransferToUpdate.getAmount());
         accountTransfer.setPurpose(accountTransferToUpdate.getPurpose());
         accountTransfer.setAccountDetailsId(accountTransferToUpdate.getAccountDetailsId());
+
         return accountTransfer;
     }
 
