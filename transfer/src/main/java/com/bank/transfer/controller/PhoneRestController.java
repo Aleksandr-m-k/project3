@@ -33,12 +33,6 @@ public class PhoneRestController {
         return new ResponseEntity<>(phoneTransfer, HttpStatus.OK);
     }
 
-    @GetMapping("/byPhone/{number}")
-    public ResponseEntity<PhoneTransfer> getPhoneTransferByNumber(@PathVariable Long number) {
-        final PhoneTransfer phoneTransfer = phoneTransferService.findTransferbyPhoneNumber(number);
-        return new ResponseEntity<>(phoneTransfer, HttpStatus.OK);
-    }
-
     @GetMapping("/")
     public ResponseEntity<List<PhoneTransfer>> getPhoneTransfer() {
         final List<PhoneTransfer> phoneTransfers = phoneTransferService.allPhoneTransfer();

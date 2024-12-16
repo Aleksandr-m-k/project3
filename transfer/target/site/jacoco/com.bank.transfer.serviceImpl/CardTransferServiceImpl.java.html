@@ -29,7 +29,7 @@ public class CardTransferServiceImpl implements CardTransferService {
     @Override
     @Transactional
     public CardTransfer findTransferByCardNumber(Long cardNumber) {
-<span class="fc" id="L32">        return cardTransferRepository.findByCardNumber(cardNumber);</span>
+<span class="nc" id="L32">        return cardTransferRepository.findByCardNumber(cardNumber);</span>
     }
 
     @Override
@@ -59,7 +59,7 @@ public class CardTransferServiceImpl implements CardTransferService {
 <span class="fc" id="L59">        cardTransfer.setCardNumber(cardTransferToUpdate.getCardNumber());</span>
 <span class="fc" id="L60">        cardTransfer.setAmount(cardTransferToUpdate.getAmount());</span>
 <span class="fc" id="L61">        cardTransfer.setPurpose(cardTransferToUpdate.getPurpose());</span>
-<span class="fc" id="L62">        cardTransfer.setCardDetailsId(cardTransferToUpdate.getCardDetailsId());</span>
+<span class="fc" id="L62">        cardTransfer.setAccountDetailsId(cardTransferToUpdate.getAccountDetailsId());</span>
 
 <span class="fc" id="L64">        return cardTransfer;</span>
     }

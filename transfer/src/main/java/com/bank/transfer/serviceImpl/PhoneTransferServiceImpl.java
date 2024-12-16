@@ -25,11 +25,6 @@ public class PhoneTransferServiceImpl implements PhoneTransferService {
         return phoneTransferRepository.findById(id);
     }
 
-    @Override
-    @Transactional
-    public PhoneTransfer findTransferbyPhoneNumber(Long phoneNumber) {
-        return phoneTransferRepository.findByPhoneNumber(phoneNumber);
-    }
 
     @Override
     @Transactional
@@ -47,6 +42,9 @@ public class PhoneTransferServiceImpl implements PhoneTransferService {
     @Override
     @Transactional
     public PhoneTransfer updatePhoneTransferById(PhoneTransfer phoneTransferToUpdate, long id) {
+        if (phoneTransferToUpdate == null) {
+            throw new IllegalArgumentException("PhoneTransfer to update cannot be null");
+        }
         final  Optional<PhoneTransfer> optionalPhoneTransfer = getPhoneTransferById(id);
 
         // Проверяем, присутствует ли значение

@@ -1,5 +1,7 @@
 package com.bank.transfer.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,6 +22,7 @@ import java.math.BigDecimal;
 @Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class PhoneTransfer {
 
     @Id
@@ -40,6 +43,7 @@ public class PhoneTransfer {
     private Long accountDetailsId;
 
 
+    @Builder
     public PhoneTransfer(Long phoneNumber, BigDecimal amount,
                          String purpose, Long accountDetailsId) {
         this.phoneNumber = phoneNumber;

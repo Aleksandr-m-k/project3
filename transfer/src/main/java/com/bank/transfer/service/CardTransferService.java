@@ -8,7 +8,6 @@ import java.util.Optional;
 
 @Service
 public interface CardTransferService {
-    CardTransfer findTransferByCardNumber(Long cardNumber);
 
     Optional<CardTransfer> getCardTransferById(Long id);
 

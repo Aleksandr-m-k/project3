@@ -2,6 +2,7 @@ package com.bank.transfer.controller;
 
 
 import com.bank.transfer.aspects.AuditAspect;
+import com.bank.transfer.dto.AccountTransferDTO;
 import com.bank.transfer.entity.AccountTransfer;
 import com.bank.transfer.service.AccountTransferService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -36,41 +37,34 @@ public class AccountRestController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<AccountTransfer>> getAccountTransferById(@PathVariable Long id) {
-        final Optional<AccountTransfer> accountTransfer = accountTransferService.getAccountTransferById(id);
-        return new ResponseEntity<>(accountTransfer, HttpStatus.OK);
-    }
-
-    @GetMapping("/byNumber/{number}")
-    public ResponseEntity<AccountTransfer> getAccountTransferByNumber(@PathVariable Long number) {
-        final AccountTransfer accountTransfer = accountTransferService.findTransferByAccountNumber(number);
-        return new ResponseEntity<>(accountTransfer, HttpStatus.OK);
+    public ResponseEntity<Optional<AccountTransferDTO>> getAccountTransferById(@PathVariable Long id) {
+        return new ResponseEntity<>(accountTransferService.getAccountTransferById(id), HttpStatus.OK);
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<AccountTransfer>> getAccountTransfer() {
-        final List<AccountTransfer> accountTransfers = accountTransferService.allAccountTransfer();
+    public ResponseEntity<List<AccountTransferDTO>> getAccountTransfer() {
+        final List<AccountTransferDTO> accountTransfersDTO = accountTransferService.allAccountTransfer();
 
-        if (accountTransfers.isEmpty()) {
+        if (accountTransfersDTO.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-        return new ResponseEntity<>(accountTransfers, HttpStatus.OK);
+        return new ResponseEntity<>(accountTransfersDTO, HttpStatus.OK);
     }
 
     @PostMapping("/")
-    public ResponseEntity<Void> addAccountTransfer(@RequestBody AccountTransfer accountTransfer) {
-        accountTransferService.saveAccountTransfer(accountTransfer);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Void> addAccountTransfer(@RequestBody AccountTransferDTO accountTransferDTO) {
+        accountTransferService.saveAccountTransfer(accountTransferDTO);
+        return new ResponseEntity<>(HttpStatus.CREATED);
 
     }
 
 
     @PutMapping("/{id}")
-    public AccountTransfer updateAccountTransfer(@RequestBody AccountTransfer accountTransfer,
+    public ResponseEntity <AccountTransfer> updateAccountTransfer(@RequestBody AccountTransferDTO accountTransferDTO,
                                                  @PathVariable("id") long id) {
-        return accountTransferService.updateAccountTransferById(accountTransfer, id);
-
+        AccountTransfer accountTransferUpdate = accountTransferService.updateAccountTransferById(accountTransferDTO, id);
+        return new ResponseEntity<>( accountTransferUpdate, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

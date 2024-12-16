@@ -1,6 +1,8 @@
 package com.bank.transfer.serviceImpl;
 
+import com.bank.transfer.dto.AccountTransferDTO;
 import com.bank.transfer.entity.AccountTransfer;
+import com.bank.transfer.mapper.AccountTransferMapper;
 import com.bank.transfer.repository.AccountTransferRepository;
 import com.bank.transfer.service.AccountTransferService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,57 +16,58 @@ import java.util.Optional;
 @Service
 public class AccountTransferServiceImpl implements AccountTransferService {
     private final AccountTransferRepository accountTransferRepository;
+    private final AccountTransferMapper mapper;
 
     @Autowired
-    public AccountTransferServiceImpl(AccountTransferRepository accountTransferRepository) {
+    public AccountTransferServiceImpl(AccountTransferRepository accountTransferRepository, AccountTransferMapper mapper) {
         this.accountTransferRepository = accountTransferRepository;
+        this.mapper = mapper;
     }
 
     @Override
-    @Transactional
-    public Optional<AccountTransfer> getAccountTransferById(Long id) {
-        return accountTransferRepository.findById(id);
-    }
+    @Transactional(readOnly = true)
+    public Optional<AccountTransferDTO> getAccountTransferById(Long id) {
+        Optional<AccountTransfer> accountTransfer = accountTransferRepository.findById(id);
+//        return mapper.accountTransferToAccountTransferDTO(accountTransfer);
+        return accountTransfer.map(mapper::accountTransferToAccountTransferDTO);
 
-    @Override
-    @Transactional
-    public AccountTransfer findTransferByAccountNumber(Long accountNumber) {
-        return accountTransferRepository.findByAccountNumber(accountNumber);
-    }
-
-    @Override
-    @Transactional
-    public List<AccountTransfer> allAccountTransfer() {
-        return accountTransferRepository.findAll();
     }
 
 
     @Override
-    @Transactional
-    public AccountTransfer saveAccountTransfer(AccountTransfer accountTransfer) {
-        return accountTransferRepository.save(accountTransfer);
+    @Transactional(readOnly = true)
+    public List<AccountTransferDTO> allAccountTransfer() {
+        List<AccountTransfer> accountTransferList = accountTransferRepository.findAll();
+        return mapper.accountTransferListToDTOList(accountTransferList);
     }
 
 
     @Override
     @Transactional
-    public AccountTransfer updateAccountTransferById(AccountTransfer accountTransferToUpdate, long id) {
-        if (accountTransferToUpdate == null) {
-            throw new IllegalArgumentException("AccountTransfer to update cannot be null");
+    public AccountTransfer saveAccountTransfer(AccountTransferDTO accountTransferDTO) {
+        return accountTransferRepository.save(mapper.accountTransferDTOToAccountTransfer(accountTransferDTO));
+    }
+
+
+    @Override
+    @Transactional
+    public AccountTransfer updateAccountTransferById(AccountTransferDTO accountTransferDTO, long id) {
+        if (accountTransferDTO == null) {
+            throw new IllegalArgumentException("AccountTransferDTO to update cannot be null");
         }
 
-        final Optional<AccountTransfer> optionalAccountTransfer = getAccountTransferById(id);
+        final Optional<AccountTransferDTO> optionalAccountTransferDTO = getAccountTransferById(id);
 
-        final AccountTransfer accountTransfer = optionalAccountTransfer.orElseThrow(() ->
+        final AccountTransferDTO accountTransfer = optionalAccountTransferDTO.orElseThrow(() ->
                 new EntityNotFoundException("AccountTransfer not found for id: " + id));
 
 
-        accountTransfer.setAccountNumber(accountTransferToUpdate.getAccountNumber());
-        accountTransfer.setAmount(accountTransferToUpdate.getAmount());
-        accountTransfer.setPurpose(accountTransferToUpdate.getPurpose());
-        accountTransfer.setAccountDetailsId(accountTransferToUpdate.getAccountDetailsId());
+        accountTransfer.setAccountNumber(accountTransferDTO.getAccountNumber());
+        accountTransfer.setAmount(accountTransferDTO.getAmount());
+        accountTransfer.setPurpose(accountTransferDTO.getPurpose());
+        accountTransfer.setAccountDetailsId(accountTransferDTO.getAccountDetailsId());
 
-        return accountTransfer;
+        return mapper.accountTransferDTOToAccountTransfer(accountTransfer);
     }
 
     @Override

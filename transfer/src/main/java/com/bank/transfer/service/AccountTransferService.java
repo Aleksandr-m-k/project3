@@ -1,5 +1,6 @@
 package com.bank.transfer.service;
 
+import com.bank.transfer.dto.AccountTransferDTO;
 import com.bank.transfer.entity.AccountTransfer;
 import org.springframework.stereotype.Service;
 
@@ -8,15 +9,14 @@ import java.util.Optional;
 
 @Service
 public interface AccountTransferService {
-    AccountTransfer findTransferByAccountNumber(Long accountNumber);
 
-    Optional<AccountTransfer> getAccountTransferById(Long id);
+    Optional<AccountTransferDTO> getAccountTransferById(Long id);
 
-    List<AccountTransfer> allAccountTransfer();
+    List<AccountTransferDTO> allAccountTransfer();
 
-    AccountTransfer saveAccountTransfer(AccountTransfer accountTransfer);
+    AccountTransfer saveAccountTransfer(AccountTransferDTO accountTransferDTO);
 
-    AccountTransfer updateAccountTransferById(AccountTransfer accountTransfer, long id);
+    AccountTransfer updateAccountTransferById(AccountTransferDTO accountTransferDTO, long id);
 
     void deleteAccountTransfer(Long id);
 }

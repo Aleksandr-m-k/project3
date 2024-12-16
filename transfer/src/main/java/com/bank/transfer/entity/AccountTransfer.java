@@ -23,7 +23,7 @@ import java.math.BigDecimal;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-//@Builder
+@Builder
 public class AccountTransfer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +41,6 @@ public class AccountTransfer {
     @Column(name = "account_details_id")
     private Long accountDetailsId;
 
-    @Builder
     public AccountTransfer(Long accountNumber, BigDecimal amount,
                            String purpose, Long accountDetailsId) {
         this.accountNumber = accountNumber;

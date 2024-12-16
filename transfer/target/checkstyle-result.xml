@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <checkstyle version="9.3">
-<file name="/Users/aleksandr/Desktop/kata academy/project/transfer/src/main/java/com/bank/transfer/serviceImpl/CardTransferServiceImpl.java">
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/entity/PhoneTransfer.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/entity/CardTransfer.java">
 </file>
 </checkstyle>

@@ -23,14 +23,14 @@ public class PhoneRestController {
     private final PhoneTransferService phoneTransferService;
 
     @Autowired
-<span class="nc" id="L26">    public PhoneRestController(PhoneTransferService phoneTransferService) {</span>
-<span class="nc" id="L27">        this.phoneTransferService = phoneTransferService;</span>
-<span class="nc" id="L28">    }</span>
+<span class="fc" id="L26">    public PhoneRestController(PhoneTransferService phoneTransferService) {</span>
+<span class="fc" id="L27">        this.phoneTransferService = phoneTransferService;</span>
+<span class="fc" id="L28">    }</span>
 
     @GetMapping(&quot;/{id}&quot;)
     public ResponseEntity&lt;Optional&lt;PhoneTransfer&gt;&gt; getPhoneTransferById(@PathVariable Long id) {
-<span class="nc" id="L32">        final Optional&lt;PhoneTransfer&gt; phoneTransfer = phoneTransferService.getPhoneTransferById(id);</span>
-<span class="nc" id="L33">        return new ResponseEntity&lt;&gt;(phoneTransfer, HttpStatus.OK);</span>
+<span class="fc" id="L32">        final Optional&lt;PhoneTransfer&gt; phoneTransfer = phoneTransferService.getPhoneTransferById(id);</span>
+<span class="fc" id="L33">        return new ResponseEntity&lt;&gt;(phoneTransfer, HttpStatus.OK);</span>
     }
 
     @GetMapping(&quot;/byPhone/{number}&quot;)
@@ -41,32 +41,32 @@ public class PhoneRestController {
 
     @GetMapping(&quot;/&quot;)
     public ResponseEntity&lt;List&lt;PhoneTransfer&gt;&gt; getPhoneTransfer() {
-<span class="nc" id="L44">        final List&lt;PhoneTransfer&gt; phoneTransfers = phoneTransferService.allPhoneTransfer();</span>
+<span class="fc" id="L44">        final List&lt;PhoneTransfer&gt; phoneTransfers = phoneTransferService.allPhoneTransfer();</span>
 
-<span class="nc bnc" id="L46" title="All 2 branches missed.">        if (phoneTransfers.isEmpty()) {</span>
+<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        if (phoneTransfers.isEmpty()) {</span>
 <span class="nc" id="L47">            return new ResponseEntity&lt;&gt;(HttpStatus.NO_CONTENT);</span>
         }
 
-<span class="nc" id="L50">        return new ResponseEntity&lt;&gt;(phoneTransfers, HttpStatus.OK);</span>
+<span class="fc" id="L50">        return new ResponseEntity&lt;&gt;(phoneTransfers, HttpStatus.OK);</span>
     }
 
     @PostMapping(&quot;/&quot;)
     public ResponseEntity&lt;Void&gt; addNewPhoneTransfer(@RequestBody PhoneTransfer phoneTransfer) {
-<span class="nc" id="L55">        phoneTransferService.savePhoneTransfer(phoneTransfer);</span>
-<span class="nc" id="L56">        return new ResponseEntity&lt;&gt;(HttpStatus.CREATED);</span>
+<span class="fc" id="L55">        phoneTransferService.savePhoneTransfer(phoneTransfer);</span>
+<span class="fc" id="L56">        return new ResponseEntity&lt;&gt;(HttpStatus.CREATED);</span>
     }
 
     @PutMapping(&quot;/{id}&quot;)
     public PhoneTransfer updatePhoneTransfer(@RequestBody PhoneTransfer phoneTransfer,
                                              @PathVariable(&quot;id&quot;) long id) {
-<span class="nc" id="L62">        return phoneTransferService.updatePhoneTransferById(phoneTransfer, id);</span>
+<span class="fc" id="L62">        return phoneTransferService.updatePhoneTransferById(phoneTransfer, id);</span>
     }
 
 
     @DeleteMapping(&quot;/{id}&quot;)
     public ResponseEntity&lt;Void&gt; deletePhoneTransfer(@PathVariable long id) {
-<span class="nc" id="L68">        phoneTransferService.deletePhoneTransfer(id);</span>
-<span class="nc" id="L69">        return ResponseEntity.ok().build();</span>
+<span class="fc" id="L68">        phoneTransferService.deletePhoneTransfer(id);</span>
+<span class="fc" id="L69">        return ResponseEntity.ok().build();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

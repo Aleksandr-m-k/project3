@@ -29,16 +29,16 @@ public class AccountRestController {
     private final AuditAspect auditAspect;
 
     @Autowired
-<span class="nc" id="L32">    public AccountRestController(AccountTransferService accountTransferService, AuditAspect auditAspect) {</span>
-<span class="nc" id="L33">        this.accountTransferService = accountTransferService;</span>
-<span class="nc" id="L34">        this.auditAspect = auditAspect;</span>
-<span class="nc" id="L35">    }</span>
+<span class="fc" id="L32">    public AccountRestController(AccountTransferService accountTransferService, AuditAspect auditAspect) {</span>
+<span class="fc" id="L33">        this.accountTransferService = accountTransferService;</span>
+<span class="fc" id="L34">        this.auditAspect = auditAspect;</span>
+<span class="fc" id="L35">    }</span>
 
 
     @GetMapping(&quot;/{id}&quot;)
     public ResponseEntity&lt;Optional&lt;AccountTransfer&gt;&gt; getAccountTransferById(@PathVariable Long id) {
-<span class="nc" id="L40">        final Optional&lt;AccountTransfer&gt; accountTransfer = accountTransferService.getAccountTransferById(id);</span>
-<span class="nc" id="L41">        return new ResponseEntity&lt;&gt;(accountTransfer, HttpStatus.OK);</span>
+<span class="fc" id="L40">        final Optional&lt;AccountTransfer&gt; accountTransfer = accountTransferService.getAccountTransferById(id);</span>
+<span class="fc" id="L41">        return new ResponseEntity&lt;&gt;(accountTransfer, HttpStatus.OK);</span>
     }
 
     @GetMapping(&quot;/byNumber/{number}&quot;)
@@ -49,19 +49,19 @@ public class AccountRestController {
 
     @GetMapping(&quot;/&quot;)
     public ResponseEntity&lt;List&lt;AccountTransfer&gt;&gt; getAccountTransfer() {
-<span class="nc" id="L52">        final List&lt;AccountTransfer&gt; accountTransfers = accountTransferService.allAccountTransfer();</span>
+<span class="fc" id="L52">        final List&lt;AccountTransfer&gt; accountTransfers = accountTransferService.allAccountTransfer();</span>
 
-<span class="nc bnc" id="L54" title="All 2 branches missed.">        if (accountTransfers.isEmpty()) {</span>
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        if (accountTransfers.isEmpty()) {</span>
 <span class="nc" id="L55">            return new ResponseEntity&lt;&gt;(HttpStatus.NO_CONTENT);</span>
         }
 
-<span class="nc" id="L58">        return new ResponseEntity&lt;&gt;(accountTransfers, HttpStatus.OK);</span>
+<span class="fc" id="L58">        return new ResponseEntity&lt;&gt;(accountTransfers, HttpStatus.OK);</span>
     }
 
     @PostMapping(&quot;/&quot;)
     public ResponseEntity&lt;Void&gt; addAccountTransfer(@RequestBody AccountTransfer accountTransfer) {
-<span class="nc" id="L63">        accountTransferService.saveAccountTransfer(accountTransfer);</span>
-<span class="nc" id="L64">        return new ResponseEntity&lt;&gt;(HttpStatus.OK);</span>
+<span class="fc" id="L63">        accountTransferService.saveAccountTransfer(accountTransfer);</span>
+<span class="fc" id="L64">        return new ResponseEntity&lt;&gt;(HttpStatus.CREATED);</span>
 
     }
 
@@ -69,14 +69,14 @@ public class AccountRestController {
     @PutMapping(&quot;/{id}&quot;)
     public AccountTransfer updateAccountTransfer(@RequestBody AccountTransfer accountTransfer,
                                                  @PathVariable(&quot;id&quot;) long id) {
-<span class="nc" id="L72">        return accountTransferService.updateAccountTransferById(accountTransfer, id);</span>
+<span class="fc" id="L72">        return accountTransferService.updateAccountTransferById(accountTransfer, id);</span>
 
     }
 
     @DeleteMapping(&quot;/{id}&quot;)
     public ResponseEntity&lt;Void&gt; deleteAccountTransfer(@PathVariable long id) {
-<span class="nc" id="L78">        accountTransferService.deleteAccountTransfer(id);</span>
-<span class="nc" id="L79">        return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L78">        accountTransferService.deleteAccountTransfer(id);</span>
+<span class="fc" id="L79">        return ResponseEntity.noContent().build();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

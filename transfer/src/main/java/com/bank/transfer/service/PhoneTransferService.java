@@ -8,7 +8,6 @@ import java.util.Optional;
 
 @Service
 public interface PhoneTransferService {
-    PhoneTransfer findTransferbyPhoneNumber(Long phoneNumber);
 
     Optional<PhoneTransfer> getPhoneTransferById(Long id);
 

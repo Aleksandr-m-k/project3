@@ -1,3 +1,9 @@
-/Users/aleksandr/Desktop/kata academy/project/transfer/src/test/java/com/bank/transfer/service/AccountTransferServiceTest.java
-/Users/aleksandr/Desktop/kata academy/project/transfer/src/test/java/com/bank/transfer/entity/AccountTransferTest.java
-/Users/aleksandr/Desktop/kata academy/project/transfer/src/test/java/com/bank/transfer/service/CardTransferServiceTest.java
+/Users/aleksandr/Desktop/kata academy/project3/transfer/src/test/java/com/bank/transfer/serviceImpl/PhoneTransferServiceImplTest.java
+/Users/aleksandr/Desktop/kata academy/project3/transfer/src/test/java/com/bank/transfer/controller/PhoneRestControllerTest.java
+/Users/aleksandr/Desktop/kata academy/project3/transfer/src/test/java/com/bank/transfer/entity/CardTransferTest.java
+/Users/aleksandr/Desktop/kata academy/project3/transfer/src/test/java/com/bank/transfer/entity/AccountTransferTest.java
+/Users/aleksandr/Desktop/kata academy/project3/transfer/src/test/java/com/bank/transfer/entity/PhoneTransferTest.java
+/Users/aleksandr/Desktop/kata academy/project3/transfer/src/test/java/com/bank/transfer/serviceImpl/AccountTransferServiceImplTest.java
+/Users/aleksandr/Desktop/kata academy/project3/transfer/src/test/java/com/bank/transfer/controller/AccountRestControllerTest.java
+/Users/aleksandr/Desktop/kata academy/project3/transfer/src/test/java/com/bank/transfer/serviceImpl/CardTransferServiceImplTest.java
+/Users/aleksandr/Desktop/kata academy/project3/transfer/src/test/java/com/bank/transfer/controller/CardRestControllerTest.java

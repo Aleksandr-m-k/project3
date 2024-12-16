@@ -33,12 +33,6 @@ public class CardRestController {
         return new ResponseEntity<>(cardTransfer, HttpStatus.OK);
     }
 
-    @GetMapping("/byCard/{number}")
-    public ResponseEntity<CardTransfer> getCardTransferByNumber(@PathVariable Long number) {
-        final CardTransfer cardTransfer = cardTransferService.findTransferByCardNumber(number);
-        return new ResponseEntity<>(cardTransfer, HttpStatus.OK);
-    }
-
     @GetMapping("/")
     public ResponseEntity<List<CardTransfer>> getCardTransfer() {
         final List<CardTransfer> cardTransfers = cardTransferService.allCardTransfer();
