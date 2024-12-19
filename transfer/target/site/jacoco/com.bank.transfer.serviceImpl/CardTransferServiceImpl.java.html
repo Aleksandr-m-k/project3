@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CardTransferServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">transfer</a> &gt; <a href="index.source.html" class="el_package">com.bank.transfer.serviceImpl</a> &gt; <span class="el_source">CardTransferServiceImpl.java</span></div><h1>CardTransferServiceImpl.java</h1><pre class="source lang-java linenums">package com.bank.transfer.serviceImpl;
 
+import com.bank.transfer.dto.CardTransferDTO;
 import com.bank.transfer.entity.CardTransfer;
+import com.bank.transfer.mapper.CardTransferMapper;
 import com.bank.transfer.repository.CardTransferRepository;
 import com.bank.transfer.service.CardTransferService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,62 +16,65 @@ import java.util.Optional;
 @Service
 public class CardTransferServiceImpl implements CardTransferService {
     private final CardTransferRepository cardTransferRepository;
+    private final CardTransferMapper mapper;
 
     @Autowired
-<span class="fc" id="L19">    public CardTransferServiceImpl(CardTransferRepository cardTransferRepository) {</span>
-<span class="fc" id="L20">        this.cardTransferRepository = cardTransferRepository;</span>
-<span class="fc" id="L21">    }</span>
+<span class="fc" id="L22">    public CardTransferServiceImpl(CardTransferRepository cardTransferRepository, CardTransferMapper mapper) {</span>
+<span class="fc" id="L23">        this.cardTransferRepository = cardTransferRepository;</span>
+<span class="fc" id="L24">        this.mapper = mapper;</span>
+<span class="fc" id="L25">    }</span>
 
     @Override
-    @Transactional
-    public Optional&lt;CardTransfer&gt; getCardTransferById(Long id) {
-<span class="fc" id="L26">        return cardTransferRepository.findById(id);</span>
+    @Transactional(readOnly = true)
+    public Optional&lt;CardTransferDTO&gt; getCardTransferById(Long id) {
+<span class="fc" id="L30">        final Optional&lt;CardTransfer&gt; cardTransfer = cardTransferRepository.findById(id);</span>
+//        return mapper.cardTransferToCardTransferDTO(cardTransfer);
+<span class="fc" id="L32">        return cardTransfer.map(mapper::cardTransferToCardTransferDTO);</span>
+
     }
 
+
     @Override
-    @Transactional
-    public CardTransfer findTransferByCardNumber(Long cardNumber) {
-<span class="nc" id="L32">        return cardTransferRepository.findByCardNumber(cardNumber);</span>
+    @Transactional(readOnly = true)
+    public List&lt;CardTransferDTO&gt; allCardTransfer() {
+<span class="fc" id="L40">        final List&lt;CardTransfer&gt; cardTransferList = cardTransferRepository.findAll();</span>
+<span class="fc" id="L41">        return mapper.cardTransferListToDTOList(cardTransferList);</span>
     }
+
 
     @Override
     @Transactional
-    public List&lt;CardTransfer&gt; allCardTransfer() {
-<span class="fc" id="L38">        return cardTransferRepository.findAll();</span>
+    public CardTransfer saveCardTransfer(CardTransferDTO cardTransferDTO) {
+<span class="fc" id="L48">        return cardTransferRepository</span>
+<span class="fc" id="L49">                .save(mapper.cardTransferDTOToCardTransfer(cardTransferDTO));</span>
     }
+
 
     @Override
     @Transactional
-    public CardTransfer saveCardTransfer(CardTransfer cardTransfer) {
-<span class="fc" id="L44">        return cardTransferRepository.save(cardTransfer);</span>
-    }
-
-    @Override
-    @Transactional
-    public CardTransfer updateCardTransferById(CardTransfer cardTransferToUpdate, long id) {
-<span class="fc bfc" id="L50" title="All 2 branches covered.">        if (cardTransferToUpdate == null) {</span>
-<span class="fc" id="L51">            throw new IllegalArgumentException(&quot;CardTransfer to update cannot be null&quot;);</span>
+    public CardTransfer updateCardTransferById(CardTransferDTO cardTransferDTO, long id) {
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if (cardTransferDTO == null) {</span>
+<span class="fc" id="L57">            throw new IllegalArgumentException(&quot;CardTransferDTO to update cannot be null&quot;);</span>
         }
 
-<span class="fc" id="L54">        final Optional&lt;CardTransfer&gt; optionalCardTransfer = getCardTransferById(id);</span>
+<span class="fc" id="L60">        final Optional&lt;CardTransferDTO&gt; optionalCardTransferDTO = getCardTransferById(id);</span>
 
-<span class="fc" id="L56">        final CardTransfer cardTransfer = optionalCardTransfer.orElseThrow(() -&gt;</span>
-<span class="nc" id="L57">                new EntityNotFoundException(&quot;CardTransfer not found for id: &quot; + id));</span>
+<span class="nc" id="L62">        final CardTransferDTO cardTransfer = optionalCardTransferDTO.orElseThrow(() -&gt;</span>
+<span class="fc" id="L63">                new EntityNotFoundException(&quot;CardTransfer not found for id: &quot; + id));</span>
 
-<span class="fc" id="L59">        cardTransfer.setCardNumber(cardTransferToUpdate.getCardNumber());</span>
-<span class="fc" id="L60">        cardTransfer.setAmount(cardTransferToUpdate.getAmount());</span>
-<span class="fc" id="L61">        cardTransfer.setPurpose(cardTransferToUpdate.getPurpose());</span>
-<span class="fc" id="L62">        cardTransfer.setAccountDetailsId(cardTransferToUpdate.getAccountDetailsId());</span>
 
-<span class="fc" id="L64">        return cardTransfer;</span>
+<span class="nc" id="L66">        cardTransfer.setCardNumber(cardTransferDTO.getCardNumber());</span>
+<span class="nc" id="L67">        cardTransfer.setAmount(cardTransferDTO.getAmount());</span>
+<span class="nc" id="L68">        cardTransfer.setPurpose(cardTransferDTO.getPurpose());</span>
+<span class="nc" id="L69">        cardTransfer.setAccountDetailsId(cardTransferDTO.getAccountDetailsId());</span>
+
+<span class="nc" id="L71">        return mapper.cardTransferDTOToCardTransfer(cardTransfer);</span>
     }
-
 
     @Override
     @Transactional
     public void deleteCardTransfer(Long id) {
-<span class="fc" id="L71">        cardTransferRepository.deleteById(id);</span>
-<span class="fc" id="L72">    }</span>
-
+<span class="fc" id="L77">        cardTransferRepository.deleteById(id);</span>
+<span class="fc" id="L78">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

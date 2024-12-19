@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AccountTransferServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">transfer</a> &gt; <a href="index.source.html" class="el_package">com.bank.transfer.serviceImpl</a> &gt; <span class="el_source">AccountTransferServiceImpl.java</span></div><h1>AccountTransferServiceImpl.java</h1><pre class="source lang-java linenums">package com.bank.transfer.serviceImpl;
 
+import com.bank.transfer.dto.AccountTransferDTO;
 import com.bank.transfer.entity.AccountTransfer;
+import com.bank.transfer.mapper.AccountTransferMapper;
 import com.bank.transfer.repository.AccountTransferRepository;
 import com.bank.transfer.service.AccountTransferService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,63 +16,65 @@ import java.util.Optional;
 @Service
 public class AccountTransferServiceImpl implements AccountTransferService {
     private final AccountTransferRepository accountTransferRepository;
+    private final AccountTransferMapper mapper;
 
     @Autowired
-<span class="fc" id="L19">    public AccountTransferServiceImpl(AccountTransferRepository accountTransferRepository) {</span>
-<span class="fc" id="L20">        this.accountTransferRepository = accountTransferRepository;</span>
-<span class="fc" id="L21">    }</span>
+    public AccountTransferServiceImpl(AccountTransferRepository accountTransferRepository,
+<span class="fc" id="L23">                                      AccountTransferMapper mapper) {</span>
+<span class="fc" id="L24">        this.accountTransferRepository = accountTransferRepository;</span>
+<span class="fc" id="L25">        this.mapper = mapper;</span>
+<span class="fc" id="L26">    }</span>
 
     @Override
-    @Transactional
-    public Optional&lt;AccountTransfer&gt; getAccountTransferById(Long id) {
-<span class="fc" id="L26">        return accountTransferRepository.findById(id);</span>
-    }
+    @Transactional(readOnly = true)
+    public Optional&lt;AccountTransferDTO&gt; getAccountTransferById(Long id) {
+<span class="fc" id="L31">        final Optional&lt;AccountTransfer&gt; accountTransfer = accountTransferRepository.findById(id);</span>
+<span class="fc" id="L32">        return accountTransfer.map(mapper::accountTransferToAccountTransferDTO);</span>
 
-    @Override
-    @Transactional
-    public AccountTransfer findTransferByAccountNumber(Long accountNumber) {
-<span class="fc" id="L32">        return accountTransferRepository.findByAccountNumber(accountNumber);</span>
-    }
-
-    @Override
-    @Transactional
-    public List&lt;AccountTransfer&gt; allAccountTransfer() {
-<span class="fc" id="L38">        return accountTransferRepository.findAll();</span>
     }
 
 
     @Override
-    @Transactional
-    public AccountTransfer saveAccountTransfer(AccountTransfer accountTransfer) {
-<span class="fc" id="L45">        return accountTransferRepository.save(accountTransfer);</span>
+    @Transactional(readOnly = true)
+    public List&lt;AccountTransferDTO&gt; allAccountTransfer() {
+<span class="fc" id="L40">        final List&lt;AccountTransfer&gt; accountTransferList = accountTransferRepository.findAll();</span>
+<span class="fc" id="L41">        return mapper.accountTransferListToDTOList(accountTransferList);</span>
     }
 
 
     @Override
     @Transactional
-    public AccountTransfer updateAccountTransferById(AccountTransfer accountTransferToUpdate, long id) {
-<span class="fc bfc" id="L52" title="All 2 branches covered.">        if (accountTransferToUpdate == null) {</span>
-<span class="fc" id="L53">            throw new IllegalArgumentException(&quot;AccountTransfer to update cannot be null&quot;);</span>
+    public AccountTransfer saveAccountTransfer(AccountTransferDTO accountTransferDTO) {
+<span class="fc" id="L48">        return accountTransferRepository</span>
+<span class="fc" id="L49">                .save(mapper.accountTransferDTOToAccountTransfer(accountTransferDTO));</span>
+    }
+
+
+    @Override
+    @Transactional
+    public AccountTransfer updateAccountTransferById(AccountTransferDTO accountTransferDTO, long id) {
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if (accountTransferDTO == null) {</span>
+<span class="fc" id="L57">            throw new IllegalArgumentException(&quot;AccountTransferDTO to update cannot be null&quot;);</span>
         }
 
-<span class="fc" id="L56">        final Optional&lt;AccountTransfer&gt; optionalAccountTransfer = getAccountTransferById(id);</span>
+<span class="fc" id="L60">        final Optional&lt;AccountTransferDTO&gt; optionalAccountTransferDTO = getAccountTransferById(id);</span>
 
-<span class="fc" id="L58">        final AccountTransfer accountTransfer = optionalAccountTransfer.orElseThrow(() -&gt;</span>
-<span class="nc" id="L59">                new EntityNotFoundException(&quot;AccountTransfer not found for id: &quot; + id));</span>
+<span class="nc" id="L62">        final AccountTransferDTO accountTransfer = optionalAccountTransferDTO.orElseThrow(() -&gt;</span>
+<span class="fc" id="L63">                new EntityNotFoundException(&quot;AccountTransfer not found for id: &quot; + id));</span>
 
 
-<span class="fc" id="L62">        accountTransfer.setAccountNumber(accountTransferToUpdate.getAccountNumber());</span>
-<span class="fc" id="L63">        accountTransfer.setAmount(accountTransferToUpdate.getAmount());</span>
-<span class="fc" id="L64">        accountTransfer.setPurpose(accountTransferToUpdate.getPurpose());</span>
-<span class="fc" id="L65">        accountTransfer.setAccountDetailsId(accountTransferToUpdate.getAccountDetailsId());</span>
+<span class="nc" id="L66">        accountTransfer.setAccountNumber(accountTransferDTO.getAccountNumber());</span>
+<span class="nc" id="L67">        accountTransfer.setAmount(accountTransferDTO.getAmount());</span>
+<span class="nc" id="L68">        accountTransfer.setPurpose(accountTransferDTO.getPurpose());</span>
+<span class="nc" id="L69">        accountTransfer.setAccountDetailsId(accountTransferDTO.getAccountDetailsId());</span>
 
-<span class="fc" id="L67">        return accountTransfer;</span>
+<span class="nc" id="L71">        return mapper.accountTransferDTOToAccountTransfer(accountTransfer);</span>
     }
 
     @Override
     @Transactional
     public void deleteAccountTransfer(Long id) {
-<span class="fc" id="L73">        accountTransferRepository.deleteById(id);</span>
-<span class="fc" id="L74">    }</span>
+<span class="fc" id="L77">        accountTransferRepository.deleteById(id);</span>
+<span class="fc" id="L78">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

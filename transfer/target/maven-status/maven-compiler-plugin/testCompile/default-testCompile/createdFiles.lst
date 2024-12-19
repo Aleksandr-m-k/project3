@@ -1,2 +1,5 @@
-com/bank/transfer/serviceImpl/PhoneTransferServiceImplTest.class
-com/bank/transfer/mapper/AccountTransferMapperTest.class
+com/bank/transfer/TransferApplicationTest.class
+com/bank/transfer/entity/CardTransferTest.class
+com/bank/transfer/entity/AccountTransferTest.class
+com/bank/transfer/serviceImpl/AccountTransferServiceImplTest.class
+com/bank/transfer/entity/PhoneTransferTest.class

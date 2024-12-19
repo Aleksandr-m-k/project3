@@ -7,10 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
@@ -34,4 +30,11 @@ public class AccountTransferDTO {
 
     @NotNull(message = "Account details ID cannot be null")
     private Long accountDetailsId;
+
+    public AccountTransferDTO(Long accountNumber, BigDecimal amount, String purpose, Long accountDetailsId) {
+        this.accountNumber = accountNumber;
+        this.amount = amount;
+        this.purpose = purpose;
+        this.accountDetailsId = accountDetailsId;
+    }
 }

@@ -1,5 +1,6 @@
 package com.bank.transfer.service;
 
+import com.bank.transfer.dto.PhoneTransferDTO;
 import com.bank.transfer.entity.PhoneTransfer;
 import org.springframework.stereotype.Service;
 
@@ -9,13 +10,13 @@ import java.util.Optional;
 @Service
 public interface PhoneTransferService {
 
-    Optional<PhoneTransfer> getPhoneTransferById(Long id);
+    Optional<PhoneTransferDTO> getPhoneTransferById(Long id);
 
-    List<PhoneTransfer> allPhoneTransfer();
+    List<PhoneTransferDTO> allPhoneTransfer();
 
-    PhoneTransfer savePhoneTransfer(PhoneTransfer phoneTransfer);
+    PhoneTransfer savePhoneTransfer(PhoneTransferDTO phoneTransferDTO);
 
-    PhoneTransfer updatePhoneTransferById(PhoneTransfer phoneTransfer, long id);
+    PhoneTransfer updatePhoneTransferById(PhoneTransferDTO phoneTransferDTO, long id);
 
     void deletePhoneTransfer(Long id);
 }

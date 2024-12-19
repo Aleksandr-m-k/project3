@@ -23,7 +23,7 @@ import java.math.BigDecimal;
 @Getter
 <span class="fc" id="L24">@NoArgsConstructor</span>
 <span class="fc" id="L25">@AllArgsConstructor</span>
-//@Builder
+<span class="pc" id="L26">@Builder</span>
 public class AccountTransfer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,13 +41,12 @@ public class AccountTransfer {
     @Column(name = &quot;account_details_id&quot;)
 <span class="fc" id="L42">    private Long accountDetailsId;</span>
 
-<span class="pc" id="L44">    @Builder</span>
     public AccountTransfer(Long accountNumber, BigDecimal amount,
-<span class="fc" id="L46">                           String purpose, Long accountDetailsId) {</span>
-<span class="fc" id="L47">        this.accountNumber = accountNumber;</span>
-<span class="fc" id="L48">        this.amount = amount;</span>
-<span class="fc" id="L49">        this.purpose = purpose;</span>
-<span class="fc" id="L50">        this.accountDetailsId = accountDetailsId;</span>
-<span class="fc" id="L51">    }</span>
+<span class="fc" id="L45">                           String purpose, Long accountDetailsId) {</span>
+<span class="fc" id="L46">        this.accountNumber = accountNumber;</span>
+<span class="fc" id="L47">        this.amount = amount;</span>
+<span class="fc" id="L48">        this.purpose = purpose;</span>
+<span class="fc" id="L49">        this.accountDetailsId = accountDetailsId;</span>
+<span class="fc" id="L50">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

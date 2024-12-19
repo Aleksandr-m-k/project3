@@ -1,6 +1,8 @@
 package com.bank.transfer.serviceImpl;
 
+import com.bank.transfer.dto.CardTransferDTO;
 import com.bank.transfer.entity.CardTransfer;
+import com.bank.transfer.mapper.CardTransferMapper;
 import com.bank.transfer.repository.CardTransferRepository;
 import com.bank.transfer.service.CardTransferService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,55 +16,64 @@ import java.util.Optional;
 @Service
 public class CardTransferServiceImpl implements CardTransferService {
     private final CardTransferRepository cardTransferRepository;
+    private final CardTransferMapper mapper;
 
     @Autowired
-    public CardTransferServiceImpl(CardTransferRepository cardTransferRepository) {
+    public CardTransferServiceImpl(CardTransferRepository cardTransferRepository, CardTransferMapper mapper) {
         this.cardTransferRepository = cardTransferRepository;
+        this.mapper = mapper;
     }
 
     @Override
-    @Transactional
-    public Optional<CardTransfer> getCardTransferById(Long id) {
-        return cardTransferRepository.findById(id);
+    @Transactional(readOnly = true)
+    public Optional<CardTransferDTO> getCardTransferById(Long id) {
+        final Optional<CardTransfer> cardTransfer = cardTransferRepository.findById(id);
+//        return mapper.cardTransferToCardTransferDTO(cardTransfer);
+        return cardTransfer.map(mapper::cardTransferToCardTransferDTO);
+
     }
+
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<CardTransferDTO> allCardTransfer() {
+        final List<CardTransfer> cardTransferList = cardTransferRepository.findAll();
+        return mapper.cardTransferListToDTOList(cardTransferList);
+    }
+
 
     @Override
     @Transactional
-    public List<CardTransfer> allCardTransfer() {
-        return cardTransferRepository.findAll();
+    public CardTransfer saveCardTransfer(CardTransferDTO cardTransferDTO) {
+        return cardTransferRepository
+                .save(mapper.cardTransferDTOToCardTransfer(cardTransferDTO));
     }
+
 
     @Override
     @Transactional
-    public CardTransfer saveCardTransfer(CardTransfer cardTransfer) {
-        return cardTransferRepository.save(cardTransfer);
-    }
-
-    @Override
-    @Transactional
-    public CardTransfer updateCardTransferById(CardTransfer cardTransferToUpdate, long id) {
-        if (cardTransferToUpdate == null) {
-            throw new IllegalArgumentException("CardTransfer to update cannot be null");
+    public CardTransfer updateCardTransferById(CardTransferDTO cardTransferDTO, long id) {
+        if (cardTransferDTO == null) {
+            throw new IllegalArgumentException("CardTransferDTO to update cannot be null");
         }
 
-        final Optional<CardTransfer> optionalCardTransfer = getCardTransferById(id);
+        final Optional<CardTransferDTO> optionalCardTransferDTO = getCardTransferById(id);
 
-        final CardTransfer cardTransfer = optionalCardTransfer.orElseThrow(() ->
+        final CardTransferDTO cardTransfer = optionalCardTransferDTO.orElseThrow(() ->
                 new EntityNotFoundException("CardTransfer not found for id: " + id));
 
-        cardTransfer.setCardNumber(cardTransferToUpdate.getCardNumber());
-        cardTransfer.setAmount(cardTransferToUpdate.getAmount());
-        cardTransfer.setPurpose(cardTransferToUpdate.getPurpose());
-        cardTransfer.setAccountDetailsId(cardTransferToUpdate.getAccountDetailsId());
 
-        return cardTransfer;
+        cardTransfer.setCardNumber(cardTransferDTO.getCardNumber());
+        cardTransfer.setAmount(cardTransferDTO.getAmount());
+        cardTransfer.setPurpose(cardTransferDTO.getPurpose());
+        cardTransfer.setAccountDetailsId(cardTransferDTO.getAccountDetailsId());
+
+        return mapper.cardTransferDTOToCardTransfer(cardTransfer);
     }
-
 
     @Override
     @Transactional
     public void deleteCardTransfer(Long id) {
         cardTransferRepository.deleteById(id);
     }
-
 }

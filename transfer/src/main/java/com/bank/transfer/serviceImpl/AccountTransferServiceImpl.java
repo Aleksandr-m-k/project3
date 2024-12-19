@@ -19,7 +19,8 @@ public class AccountTransferServiceImpl implements AccountTransferService {
     private final AccountTransferMapper mapper;
 
     @Autowired
-    public AccountTransferServiceImpl(AccountTransferRepository accountTransferRepository, AccountTransferMapper mapper) {
+    public AccountTransferServiceImpl(AccountTransferRepository accountTransferRepository,
+                                      AccountTransferMapper mapper) {
         this.accountTransferRepository = accountTransferRepository;
         this.mapper = mapper;
     }
@@ -27,8 +28,7 @@ public class AccountTransferServiceImpl implements AccountTransferService {
     @Override
     @Transactional(readOnly = true)
     public Optional<AccountTransferDTO> getAccountTransferById(Long id) {
-        Optional<AccountTransfer> accountTransfer = accountTransferRepository.findById(id);
-//        return mapper.accountTransferToAccountTransferDTO(accountTransfer);
+        final Optional<AccountTransfer> accountTransfer = accountTransferRepository.findById(id);
         return accountTransfer.map(mapper::accountTransferToAccountTransferDTO);
 
     }
@@ -37,7 +37,7 @@ public class AccountTransferServiceImpl implements AccountTransferService {
     @Override
     @Transactional(readOnly = true)
     public List<AccountTransferDTO> allAccountTransfer() {
-        List<AccountTransfer> accountTransferList = accountTransferRepository.findAll();
+        final List<AccountTransfer> accountTransferList = accountTransferRepository.findAll();
         return mapper.accountTransferListToDTOList(accountTransferList);
     }
 
@@ -45,7 +45,8 @@ public class AccountTransferServiceImpl implements AccountTransferService {
     @Override
     @Transactional
     public AccountTransfer saveAccountTransfer(AccountTransferDTO accountTransferDTO) {
-        return accountTransferRepository.save(mapper.accountTransferDTOToAccountTransfer(accountTransferDTO));
+        return accountTransferRepository
+                .save(mapper.accountTransferDTOToAccountTransfer(accountTransferDTO));
     }
 
 
@@ -57,9 +58,6 @@ public class AccountTransferServiceImpl implements AccountTransferService {
         }
 
         final Optional<AccountTransferDTO> optionalAccountTransferDTO = getAccountTransferById(id);
-
-        final AccountTransferDTO accountTransfer = optionalAccountTransferDTO.orElseThrow(() ->
-                new EntityNotFoundException("AccountTransfer not found for id: " + id));
 
 
         accountTransfer.setAccountNumber(accountTransferDTO.getAccountNumber());

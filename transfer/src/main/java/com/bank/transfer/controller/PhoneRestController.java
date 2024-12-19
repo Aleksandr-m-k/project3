@@ -1,5 +1,7 @@
 package com.bank.transfer.controller;
 
+import com.bank.transfer.aspects.AuditAspect;
+import com.bank.transfer.dto.PhoneTransferDTO;
 import com.bank.transfer.entity.PhoneTransfer;
 import com.bank.transfer.service.PhoneTransferService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,45 +23,49 @@ import java.util.Optional;
 @RequestMapping("/phone")
 public class PhoneRestController {
     private final PhoneTransferService phoneTransferService;
+    private final AuditAspect auditAspect;
 
     @Autowired
-    public PhoneRestController(PhoneTransferService phoneTransferService) {
+    public PhoneRestController(PhoneTransferService phoneTransferService, AuditAspect auditAspect) {
         this.phoneTransferService = phoneTransferService;
+        this.auditAspect = auditAspect;
     }
 
+
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<PhoneTransfer>> getPhoneTransferById(@PathVariable Long id) {
-        final Optional<PhoneTransfer> phoneTransfer = phoneTransferService.getPhoneTransferById(id);
-        return new ResponseEntity<>(phoneTransfer, HttpStatus.OK);
+    public ResponseEntity<Optional<PhoneTransferDTO>> getPhoneTransferById(@PathVariable Long id) {
+        return new ResponseEntity<>(phoneTransferService.getPhoneTransferById(id), HttpStatus.OK);
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<PhoneTransfer>> getPhoneTransfer() {
-        final List<PhoneTransfer> phoneTransfers = phoneTransferService.allPhoneTransfer();
+    public ResponseEntity<List<PhoneTransferDTO>> getPhoneTransfer() {
+        final List<PhoneTransferDTO> phoneTransfersDTO = phoneTransferService.allPhoneTransfer();
 
-        if (phoneTransfers.isEmpty()) {
+        if (phoneTransfersDTO.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-        return new ResponseEntity<>(phoneTransfers, HttpStatus.OK);
+        return new ResponseEntity<>(phoneTransfersDTO, HttpStatus.OK);
     }
 
     @PostMapping("/")
-    public ResponseEntity<Void> addNewPhoneTransfer(@RequestBody PhoneTransfer phoneTransfer) {
-        phoneTransferService.savePhoneTransfer(phoneTransfer);
+    public ResponseEntity<Void> addPhoneTransfer(@RequestBody PhoneTransferDTO phoneTransferDTO) {
+        phoneTransferService.savePhoneTransfer(phoneTransferDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
+
     }
+
 
     @PutMapping("/{id}")
-    public PhoneTransfer updatePhoneTransfer(@RequestBody PhoneTransfer phoneTransfer,
-                                             @PathVariable("id") long id) {
-        return phoneTransferService.updatePhoneTransferById(phoneTransfer, id);
+    public ResponseEntity<PhoneTransfer> updatePhoneTransfer(@RequestBody PhoneTransferDTO phoneTransferDTO,
+                                                             @PathVariable("id") long id) {
+        final PhoneTransfer phoneTransferUpdate = phoneTransferService.updatePhoneTransferById(phoneTransferDTO, id);
+        return new ResponseEntity<>(phoneTransferUpdate, HttpStatus.OK);
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePhoneTransfer(@PathVariable long id) {
         phoneTransferService.deletePhoneTransfer(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

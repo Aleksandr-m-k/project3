@@ -1,5 +1,7 @@
 package com.bank.transfer.controller;
 
+import com.bank.transfer.aspects.AuditAspect;
+import com.bank.transfer.dto.CardTransferDTO;
 import com.bank.transfer.entity.CardTransfer;
 import com.bank.transfer.service.CardTransferService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,46 +23,49 @@ import java.util.Optional;
 @RequestMapping("/card")
 public class CardRestController {
     private final CardTransferService cardTransferService;
+    private final AuditAspect auditAspect;
 
     @Autowired
-    public CardRestController(CardTransferService cardTransferService) {
+    public CardRestController(CardTransferService cardTransferService, AuditAspect auditAspect) {
         this.cardTransferService = cardTransferService;
+        this.auditAspect = auditAspect;
     }
 
+
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<CardTransfer>> getCardTransferById(@PathVariable Long id) {
-        final Optional<CardTransfer> cardTransfer = cardTransferService.getCardTransferById(id);
-        return new ResponseEntity<>(cardTransfer, HttpStatus.OK);
+    public ResponseEntity<Optional<CardTransferDTO>> getCardTransferById(@PathVariable Long id) {
+        return new ResponseEntity<>(cardTransferService.getCardTransferById(id), HttpStatus.OK);
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<CardTransfer>> getCardTransfer() {
-        final List<CardTransfer> cardTransfers = cardTransferService.allCardTransfer();
+    public ResponseEntity<List<CardTransferDTO>> getCardTransfer() {
+        final List<CardTransferDTO> cardTransfersDTO = cardTransferService.allCardTransfer();
 
-        if (cardTransfers.isEmpty()) {
+        if (cardTransfersDTO.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-        return new ResponseEntity<>(cardTransfers, HttpStatus.OK);
+        return new ResponseEntity<>(cardTransfersDTO, HttpStatus.OK);
     }
 
     @PostMapping("/")
-    public ResponseEntity<Void> addNewCardTransfer(@RequestBody CardTransfer cardTransfer) {
-        cardTransferService.saveCardTransfer(cardTransfer);
+    public ResponseEntity<Void> addCardTransfer(@RequestBody CardTransferDTO cardTransferDTO) {
+        cardTransferService.saveCardTransfer(cardTransferDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
+
     }
 
 
     @PutMapping("/{id}")
-    public CardTransfer updateCardTransfer(@RequestBody CardTransfer cardTransfer,
-                                           @PathVariable("id") long id) {
-        return cardTransferService.updateCardTransferById(cardTransfer, id);
+    public ResponseEntity<CardTransfer> updateCardTransfer(@RequestBody CardTransferDTO cardTransferDTO,
+                                                           @PathVariable("id") long id) {
+        final CardTransfer cardTransferUpdate = cardTransferService.updateCardTransferById(cardTransferDTO, id);
+        return new ResponseEntity<>(cardTransferUpdate, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCardTransfer(@PathVariable long id) {
         cardTransferService.deleteCardTransfer(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
-
 }

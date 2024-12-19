@@ -47,7 +47,13 @@
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>${springdoc-openapi-ui.version}</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-compiler-plugin -->
+
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+
 		<dependency>
 			<groupId>org.apache.maven.plugins</groupId>
 			<artifactId>maven-compiler-plugin</artifactId>
@@ -158,12 +164,22 @@
 						<goals>
 							<goal>report</goal>
 						</goals>
+						<configuration>
+							<excludes>
+								<exclude>com/bank/transfer/repository/**</exclude> <!-- Исключение для стандартных отчетов -->
+							</excludes>
+						</configuration>
 					</execution>
 					<execution>
 						<id>default-report-integration</id>
 						<goals>
 							<goal>report-integration</goal>
 						</goals>
+						<configuration>
+							<excludes>
+								<exclude>com/bank/transfer/repository/**</exclude> <!-- Исключение для интеграционных отчетов -->
+							</excludes>
+						</configuration>
 					</execution>
 					<execution>
 						<id>default-check</id>
@@ -171,6 +187,9 @@
 							<goal>check</goal>
 						</goals>
 						<configuration>
+							<excludes>
+								<exclude>com/bank/transfer/repository/**</exclude> <!-- Исключение для проверки -->
+							</excludes>
 							<rules>
 								<rule>
 									<element>BUNDLE</element>
@@ -187,6 +206,7 @@
 					</execution>
 				</executions>
 			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>

@@ -23,10 +23,10 @@ public class AuditAspect {
     private final ObjectMapper objectMapper; // ObjectMapper для преобразования в JSON
 
     @Autowired
-<span class="nc" id="L26">    public AuditAspect(AuditRepository auditRepository) {</span>
-<span class="nc" id="L27">        this.auditRepository = auditRepository;</span>
-<span class="nc" id="L28">        this.objectMapper = new ObjectMapper(); // Инициализация ObjectMapper</span>
-<span class="nc" id="L29">    }</span>
+<span class="fc" id="L26">    public AuditAspect(AuditRepository auditRepository) {</span>
+<span class="fc" id="L27">        this.auditRepository = auditRepository;</span>
+<span class="fc" id="L28">        this.objectMapper = new ObjectMapper(); // Инициализация ObjectMapper</span>
+<span class="fc" id="L29">    }</span>
 
     @Pointcut(&quot;execution(* save*Transfer(..))&quot;)
     public void createMethod() {

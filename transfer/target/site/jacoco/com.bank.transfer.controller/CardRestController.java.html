@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CardRestController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">transfer</a> &gt; <a href="index.source.html" class="el_package">com.bank.transfer.controller</a> &gt; <span class="el_source">CardRestController.java</span></div><h1>CardRestController.java</h1><pre class="source lang-java linenums">package com.bank.transfer.controller;
 
+import com.bank.transfer.aspects.AuditAspect;
+import com.bank.transfer.dto.CardTransferDTO;
 import com.bank.transfer.entity.CardTransfer;
 import com.bank.transfer.service.CardTransferService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,53 +23,50 @@ import java.util.Optional;
 @RequestMapping(&quot;/card&quot;)
 public class CardRestController {
     private final CardTransferService cardTransferService;
+    private final AuditAspect auditAspect;
 
     @Autowired
-<span class="fc" id="L26">    public CardRestController(CardTransferService cardTransferService) {</span>
-<span class="fc" id="L27">        this.cardTransferService = cardTransferService;</span>
-<span class="fc" id="L28">    }</span>
+<span class="fc" id="L29">    public CardRestController(CardTransferService cardTransferService, AuditAspect auditAspect) {</span>
+<span class="fc" id="L30">        this.cardTransferService = cardTransferService;</span>
+<span class="fc" id="L31">        this.auditAspect = auditAspect;</span>
+<span class="fc" id="L32">    }</span>
+
 
     @GetMapping(&quot;/{id}&quot;)
-    public ResponseEntity&lt;Optional&lt;CardTransfer&gt;&gt; getCardTransferById(@PathVariable Long id) {
-<span class="fc" id="L32">        final Optional&lt;CardTransfer&gt; cardTransfer = cardTransferService.getCardTransferById(id);</span>
-<span class="fc" id="L33">        return new ResponseEntity&lt;&gt;(cardTransfer, HttpStatus.OK);</span>
-    }
-
-    @GetMapping(&quot;/byCard/{number}&quot;)
-    public ResponseEntity&lt;CardTransfer&gt; getCardTransferByNumber(@PathVariable Long number) {
-<span class="nc" id="L38">        final CardTransfer cardTransfer = cardTransferService.findTransferByCardNumber(number);</span>
-<span class="nc" id="L39">        return new ResponseEntity&lt;&gt;(cardTransfer, HttpStatus.OK);</span>
+    public ResponseEntity&lt;Optional&lt;CardTransferDTO&gt;&gt; getCardTransferById(@PathVariable Long id) {
+<span class="fc" id="L37">        return new ResponseEntity&lt;&gt;(cardTransferService.getCardTransferById(id), HttpStatus.OK);</span>
     }
 
     @GetMapping(&quot;/&quot;)
-    public ResponseEntity&lt;List&lt;CardTransfer&gt;&gt; getCardTransfer() {
-<span class="fc" id="L44">        final List&lt;CardTransfer&gt; cardTransfers = cardTransferService.allCardTransfer();</span>
+    public ResponseEntity&lt;List&lt;CardTransferDTO&gt;&gt; getCardTransfer() {
+<span class="fc" id="L42">        final List&lt;CardTransferDTO&gt; cardTransfersDTO = cardTransferService.allCardTransfer();</span>
 
-<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        if (cardTransfers.isEmpty()) {</span>
-<span class="nc" id="L47">            return new ResponseEntity&lt;&gt;(HttpStatus.NO_CONTENT);</span>
+<span class="pc bpc" id="L44" title="1 of 2 branches missed.">        if (cardTransfersDTO.isEmpty()) {</span>
+<span class="nc" id="L45">            return new ResponseEntity&lt;&gt;(HttpStatus.NO_CONTENT);</span>
         }
 
-<span class="fc" id="L50">        return new ResponseEntity&lt;&gt;(cardTransfers, HttpStatus.OK);</span>
+<span class="fc" id="L48">        return new ResponseEntity&lt;&gt;(cardTransfersDTO, HttpStatus.OK);</span>
     }
 
     @PostMapping(&quot;/&quot;)
-    public ResponseEntity&lt;Void&gt; addNewCardTransfer(@RequestBody CardTransfer cardTransfer) {
-<span class="fc" id="L55">        cardTransferService.saveCardTransfer(cardTransfer);</span>
-<span class="fc" id="L56">        return new ResponseEntity&lt;&gt;(HttpStatus.CREATED);</span>
+    public ResponseEntity&lt;Void&gt; addCardTransfer(@RequestBody CardTransferDTO cardTransferDTO) {
+<span class="fc" id="L53">        cardTransferService.saveCardTransfer(cardTransferDTO);</span>
+<span class="fc" id="L54">        return new ResponseEntity&lt;&gt;(HttpStatus.CREATED);</span>
+
     }
 
 
     @PutMapping(&quot;/{id}&quot;)
-    public CardTransfer updateCardTransfer(@RequestBody CardTransfer cardTransfer,
-                                           @PathVariable(&quot;id&quot;) long id) {
-<span class="fc" id="L63">        return cardTransferService.updateCardTransferById(cardTransfer, id);</span>
+    public ResponseEntity&lt;CardTransfer&gt; updateCardTransfer(@RequestBody CardTransferDTO cardTransferDTO,
+                                                           @PathVariable(&quot;id&quot;) long id) {
+<span class="fc" id="L62">        final CardTransfer cardTransferUpdate = cardTransferService.updateCardTransferById(cardTransferDTO, id);</span>
+<span class="fc" id="L63">        return new ResponseEntity&lt;&gt;(cardTransferUpdate, HttpStatus.OK);</span>
     }
 
     @DeleteMapping(&quot;/{id}&quot;)
     public ResponseEntity&lt;Void&gt; deleteCardTransfer(@PathVariable long id) {
 <span class="fc" id="L68">        cardTransferService.deleteCardTransfer(id);</span>
-<span class="fc" id="L69">        return ResponseEntity.ok().build();</span>
+<span class="fc" id="L69">        return ResponseEntity.noContent().build();</span>
     }
-
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

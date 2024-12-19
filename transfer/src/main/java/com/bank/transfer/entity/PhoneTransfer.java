@@ -23,6 +23,7 @@ import java.math.BigDecimal;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class PhoneTransfer {
 
     @Id
@@ -42,8 +43,6 @@ public class PhoneTransfer {
     @Column(name = "account_details_id")
     private Long accountDetailsId;
 
-
-    @Builder
     public PhoneTransfer(Long phoneNumber, BigDecimal amount,
                          String purpose, Long accountDetailsId) {
         this.phoneNumber = phoneNumber;

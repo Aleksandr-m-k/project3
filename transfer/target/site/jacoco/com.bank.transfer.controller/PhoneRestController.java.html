@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PhoneRestController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">transfer</a> &gt; <a href="index.source.html" class="el_package">com.bank.transfer.controller</a> &gt; <span class="el_source">PhoneRestController.java</span></div><h1>PhoneRestController.java</h1><pre class="source lang-java linenums">package com.bank.transfer.controller;
 
+import com.bank.transfer.aspects.AuditAspect;
+import com.bank.transfer.dto.PhoneTransferDTO;
 import com.bank.transfer.entity.PhoneTransfer;
 import com.bank.transfer.service.PhoneTransferService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,52 +23,50 @@ import java.util.Optional;
 @RequestMapping(&quot;/phone&quot;)
 public class PhoneRestController {
     private final PhoneTransferService phoneTransferService;
+    private final AuditAspect auditAspect;
 
     @Autowired
-<span class="fc" id="L26">    public PhoneRestController(PhoneTransferService phoneTransferService) {</span>
-<span class="fc" id="L27">        this.phoneTransferService = phoneTransferService;</span>
-<span class="fc" id="L28">    }</span>
+<span class="fc" id="L29">    public PhoneRestController(PhoneTransferService phoneTransferService, AuditAspect auditAspect) {</span>
+<span class="fc" id="L30">        this.phoneTransferService = phoneTransferService;</span>
+<span class="fc" id="L31">        this.auditAspect = auditAspect;</span>
+<span class="fc" id="L32">    }</span>
+
 
     @GetMapping(&quot;/{id}&quot;)
-    public ResponseEntity&lt;Optional&lt;PhoneTransfer&gt;&gt; getPhoneTransferById(@PathVariable Long id) {
-<span class="fc" id="L32">        final Optional&lt;PhoneTransfer&gt; phoneTransfer = phoneTransferService.getPhoneTransferById(id);</span>
-<span class="fc" id="L33">        return new ResponseEntity&lt;&gt;(phoneTransfer, HttpStatus.OK);</span>
-    }
-
-    @GetMapping(&quot;/byPhone/{number}&quot;)
-    public ResponseEntity&lt;PhoneTransfer&gt; getPhoneTransferByNumber(@PathVariable Long number) {
-<span class="nc" id="L38">        final PhoneTransfer phoneTransfer = phoneTransferService.findTransferbyPhoneNumber(number);</span>
-<span class="nc" id="L39">        return new ResponseEntity&lt;&gt;(phoneTransfer, HttpStatus.OK);</span>
+    public ResponseEntity&lt;Optional&lt;PhoneTransferDTO&gt;&gt; getPhoneTransferById(@PathVariable Long id) {
+<span class="fc" id="L37">        return new ResponseEntity&lt;&gt;(phoneTransferService.getPhoneTransferById(id), HttpStatus.OK);</span>
     }
 
     @GetMapping(&quot;/&quot;)
-    public ResponseEntity&lt;List&lt;PhoneTransfer&gt;&gt; getPhoneTransfer() {
-<span class="fc" id="L44">        final List&lt;PhoneTransfer&gt; phoneTransfers = phoneTransferService.allPhoneTransfer();</span>
+    public ResponseEntity&lt;List&lt;PhoneTransferDTO&gt;&gt; getPhoneTransfer() {
+<span class="fc" id="L42">        final List&lt;PhoneTransferDTO&gt; phoneTransfersDTO = phoneTransferService.allPhoneTransfer();</span>
 
-<span class="pc bpc" id="L46" title="1 of 2 branches missed.">        if (phoneTransfers.isEmpty()) {</span>
-<span class="nc" id="L47">            return new ResponseEntity&lt;&gt;(HttpStatus.NO_CONTENT);</span>
+<span class="pc bpc" id="L44" title="1 of 2 branches missed.">        if (phoneTransfersDTO.isEmpty()) {</span>
+<span class="nc" id="L45">            return new ResponseEntity&lt;&gt;(HttpStatus.NO_CONTENT);</span>
         }
 
-<span class="fc" id="L50">        return new ResponseEntity&lt;&gt;(phoneTransfers, HttpStatus.OK);</span>
+<span class="fc" id="L48">        return new ResponseEntity&lt;&gt;(phoneTransfersDTO, HttpStatus.OK);</span>
     }
 
     @PostMapping(&quot;/&quot;)
-    public ResponseEntity&lt;Void&gt; addNewPhoneTransfer(@RequestBody PhoneTransfer phoneTransfer) {
-<span class="fc" id="L55">        phoneTransferService.savePhoneTransfer(phoneTransfer);</span>
-<span class="fc" id="L56">        return new ResponseEntity&lt;&gt;(HttpStatus.CREATED);</span>
+    public ResponseEntity&lt;Void&gt; addPhoneTransfer(@RequestBody PhoneTransferDTO phoneTransferDTO) {
+<span class="fc" id="L53">        phoneTransferService.savePhoneTransfer(phoneTransferDTO);</span>
+<span class="fc" id="L54">        return new ResponseEntity&lt;&gt;(HttpStatus.CREATED);</span>
+
     }
+
 
     @PutMapping(&quot;/{id}&quot;)
-    public PhoneTransfer updatePhoneTransfer(@RequestBody PhoneTransfer phoneTransfer,
-                                             @PathVariable(&quot;id&quot;) long id) {
-<span class="fc" id="L62">        return phoneTransferService.updatePhoneTransferById(phoneTransfer, id);</span>
+    public ResponseEntity&lt;PhoneTransfer&gt; updatePhoneTransfer(@RequestBody PhoneTransferDTO phoneTransferDTO,
+                                                             @PathVariable(&quot;id&quot;) long id) {
+<span class="fc" id="L62">        final PhoneTransfer phoneTransferUpdate = phoneTransferService.updatePhoneTransferById(phoneTransferDTO, id);</span>
+<span class="fc" id="L63">        return new ResponseEntity&lt;&gt;(phoneTransferUpdate, HttpStatus.OK);</span>
     }
-
 
     @DeleteMapping(&quot;/{id}&quot;)
     public ResponseEntity&lt;Void&gt; deletePhoneTransfer(@PathVariable long id) {
 <span class="fc" id="L68">        phoneTransferService.deletePhoneTransfer(id);</span>
-<span class="fc" id="L69">        return ResponseEntity.ok().build();</span>
+<span class="fc" id="L69">        return ResponseEntity.noContent().build();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
