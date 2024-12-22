@@ -42,5 +42,4 @@ public class AuditRestController {
 
         return new ResponseEntity<>(auditsDTO, HttpStatus.OK);
     }
-
 }
