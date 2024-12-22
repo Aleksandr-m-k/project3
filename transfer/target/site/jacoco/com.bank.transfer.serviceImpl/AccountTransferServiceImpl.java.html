@@ -57,24 +57,22 @@ public class AccountTransferServiceImpl implements AccountTransferService {
 <span class="fc" id="L57">            throw new IllegalArgumentException(&quot;AccountTransferDTO to update cannot be null&quot;);</span>
         }
 
-<span class="fc" id="L60">        final Optional&lt;AccountTransferDTO&gt; optionalAccountTransferDTO = getAccountTransferById(id);</span>
+<span class="fc" id="L60">        final Optional&lt;AccountTransferDTO&gt; optionalAccountTransfer = getAccountTransferById(id);</span>
+<span class="nc" id="L61">        final AccountTransferDTO accountTransfer = optionalAccountTransfer.orElseThrow(() -&gt;</span>
+<span class="fc" id="L62">                new EntityNotFoundException(&quot;CardTransfer not found for id: &quot; + id));</span>
 
-<span class="nc" id="L62">        final AccountTransferDTO accountTransfer = optionalAccountTransferDTO.orElseThrow(() -&gt;</span>
-<span class="fc" id="L63">                new EntityNotFoundException(&quot;AccountTransfer not found for id: &quot; + id));</span>
+<span class="nc" id="L64">        accountTransfer.setAccountNumber(accountTransferDTO.getAccountNumber());</span>
+<span class="nc" id="L65">        accountTransfer.setAmount(accountTransferDTO.getAmount());</span>
+<span class="nc" id="L66">        accountTransfer.setPurpose(accountTransferDTO.getPurpose());</span>
+<span class="nc" id="L67">        accountTransfer.setAccountDetailsId(accountTransferDTO.getAccountDetailsId());</span>
 
-
-<span class="nc" id="L66">        accountTransfer.setAccountNumber(accountTransferDTO.getAccountNumber());</span>
-<span class="nc" id="L67">        accountTransfer.setAmount(accountTransferDTO.getAmount());</span>
-<span class="nc" id="L68">        accountTransfer.setPurpose(accountTransferDTO.getPurpose());</span>
-<span class="nc" id="L69">        accountTransfer.setAccountDetailsId(accountTransferDTO.getAccountDetailsId());</span>
-
-<span class="nc" id="L71">        return mapper.accountTransferDTOToAccountTransfer(accountTransfer);</span>
+<span class="nc" id="L69">        return mapper.accountTransferDTOToAccountTransfer(accountTransfer);</span>
     }
 
     @Override
     @Transactional
     public void deleteAccountTransfer(Long id) {
-<span class="fc" id="L77">        accountTransferRepository.deleteById(id);</span>
-<span class="fc" id="L78">    }</span>
+<span class="fc" id="L75">        accountTransferRepository.deleteById(id);</span>
+<span class="fc" id="L76">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

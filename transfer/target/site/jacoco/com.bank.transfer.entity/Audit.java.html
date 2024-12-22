@@ -17,57 +17,58 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = &quot;audit&quot;, schema = &quot;transfer&quot;)
-<span class="nc" id="L20">@ToString</span>
-<span class="nc" id="L21">@Setter</span>
+<span class="fc" id="L20">@ToString</span>
+<span class="fc" id="L21">@Setter</span>
 @Getter
 <span class="fc" id="L23">@NoArgsConstructor</span>
-<span class="nc" id="L24">@AllArgsConstructor</span>
-<span class="nc" id="L25">@Builder</span>
+<span class="fc" id="L24">@AllArgsConstructor</span>
+<span class="pc" id="L25">@Builder</span>
 public class Audit {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-<span class="nc" id="L29">    private Long id;</span>
+<span class="fc" id="L30">    private Long id;</span>
 
     @Column(name = &quot;entity_type&quot;)
-//    @Size(max = 40)
-<span class="nc" id="L33">    private String entityType;</span>
+
+<span class="fc" id="L34">    private String entityType;</span>
 
     @Column(name = &quot;operation_type&quot;)
-//    @Size(max = 255)
-<span class="nc" id="L37">    private String operationType;</span>
+
+<span class="fc" id="L38">    private String operationType;</span>
 
     @Column(name = &quot;created_by&quot;)
-//    @Size(max = 255)
-<span class="nc" id="L41">    private String createdBy;</span>
+
+<span class="fc" id="L42">    private String createdBy;</span>
 
     @Column(name = &quot;modified_by&quot;)
-//    @Size(max = 40)
-<span class="nc" id="L45">    private String modifiedBy;</span>
+
+<span class="fc" id="L46">    private String modifiedBy;</span>
 
     @Column(name = &quot;created_at&quot;)
-<span class="nc" id="L48">    private LocalDateTime createdAt;</span>
+<span class="fc" id="L49">    private LocalDateTime createdAt;</span>
 
     @Column(name = &quot;modified_at&quot;)
-<span class="nc" id="L51">    private LocalDateTime modifiedAt;</span>
+<span class="fc" id="L52">    private LocalDateTime modifiedAt;</span>
 
     @Column(name = &quot;new_entity_json&quot;)
-<span class="nc" id="L54">    private String newEntityJson;</span>
+<span class="fc" id="L55">    private String newEntityJson;</span>
 
     @Column(name = &quot;entity_json&quot;)
-<span class="nc" id="L57">    private String entityJson;</span>
+<span class="fc" id="L58">    private String entityJson;</span>
 
 
     public Audit(String entityType, String operationType, String createdBy,
                  String modifiedBy, LocalDateTime createdAt, LocalDateTime modifiedAt,
-<span class="nc" id="L62">                 String newEntityJson, String entityJson) {</span>
-<span class="nc" id="L63">        this.entityType = entityType;</span>
-<span class="nc" id="L64">        this.operationType = operationType;</span>
-<span class="nc" id="L65">        this.createdBy = createdBy;</span>
-<span class="nc" id="L66">        this.modifiedBy = modifiedBy;</span>
-<span class="nc" id="L67">        this.createdAt = createdAt;</span>
-<span class="nc" id="L68">        this.modifiedAt = modifiedAt;</span>
-<span class="nc" id="L69">        this.newEntityJson = newEntityJson;</span>
-<span class="nc" id="L70">        this.entityJson = entityJson;</span>
-<span class="nc" id="L71">    }</span>
+<span class="nc" id="L63">                 String newEntityJson, String entityJson) {</span>
+<span class="nc" id="L64">        this.entityType = entityType;</span>
+<span class="nc" id="L65">        this.operationType = operationType;</span>
+<span class="nc" id="L66">        this.createdBy = createdBy;</span>
+<span class="nc" id="L67">        this.modifiedBy = modifiedBy;</span>
+<span class="nc" id="L68">        this.createdAt = createdAt;</span>
+<span class="nc" id="L69">        this.modifiedAt = modifiedAt;</span>
+<span class="nc" id="L70">        this.newEntityJson = newEntityJson;</span>
+<span class="nc" id="L71">        this.entityJson = entityJson;</span>
+<span class="nc" id="L72">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

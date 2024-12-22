@@ -59,19 +59,18 @@ public class AccountRestController {
 
     }
 
-
     @PutMapping(&quot;/{id}&quot;)
-    public ResponseEntity&lt;AccountTransfer&gt; updateAccountTransfer(@RequestBody AccountTransferDTO accountTransferDTO,
+    public AccountTransfer updateAccountTransfer(@RequestBody AccountTransferDTO accountTransferDTO,
                                                                  @PathVariable(&quot;id&quot;) long id) {
-<span class="fc" id="L66">        final AccountTransfer accountTransferUpdate =</span>
-<span class="fc" id="L67">                accountTransferService.updateAccountTransferById(accountTransferDTO, id);</span>
-<span class="fc" id="L68">        return new ResponseEntity&lt;&gt;(accountTransferUpdate, HttpStatus.OK);</span>
+<span class="fc" id="L65">        final AccountTransfer accountTransferUpdate =</span>
+<span class="fc" id="L66">                accountTransferService.updateAccountTransferById(accountTransferDTO, id);</span>
+<span class="fc" id="L67">        return accountTransferUpdate;</span>
     }
 
     @DeleteMapping(&quot;/{id}&quot;)
     public ResponseEntity&lt;Void&gt; deleteAccountTransfer(@PathVariable long id) {
-<span class="fc" id="L73">        accountTransferService.deleteAccountTransfer(id);</span>
-<span class="fc" id="L74">        return ResponseEntity.noContent().build();</span>
+<span class="fc" id="L72">        accountTransferService.deleteAccountTransfer(id);</span>
+<span class="fc" id="L73">        return ResponseEntity.noContent().build();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

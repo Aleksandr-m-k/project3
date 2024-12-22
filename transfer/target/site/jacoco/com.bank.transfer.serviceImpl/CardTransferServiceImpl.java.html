@@ -59,16 +59,16 @@ public class CardTransferServiceImpl implements CardTransferService {
 
 <span class="fc" id="L60">        final Optional&lt;CardTransferDTO&gt; optionalCardTransferDTO = getCardTransferById(id);</span>
 
-<span class="nc" id="L62">        final CardTransferDTO cardTransfer = optionalCardTransferDTO.orElseThrow(() -&gt;</span>
+<span class="nc" id="L62">        final CardTransferDTO cardTransferDTO3 = optionalCardTransferDTO.orElseThrow(() -&gt;</span>
 <span class="fc" id="L63">                new EntityNotFoundException(&quot;CardTransfer not found for id: &quot; + id));</span>
 
 
-<span class="nc" id="L66">        cardTransfer.setCardNumber(cardTransferDTO.getCardNumber());</span>
-<span class="nc" id="L67">        cardTransfer.setAmount(cardTransferDTO.getAmount());</span>
-<span class="nc" id="L68">        cardTransfer.setPurpose(cardTransferDTO.getPurpose());</span>
-<span class="nc" id="L69">        cardTransfer.setAccountDetailsId(cardTransferDTO.getAccountDetailsId());</span>
+<span class="nc" id="L66">        cardTransferDTO3.setCardNumber(cardTransferDTO.getCardNumber());</span>
+<span class="nc" id="L67">        cardTransferDTO3.setAmount(cardTransferDTO.getAmount());</span>
+<span class="nc" id="L68">        cardTransferDTO3.setPurpose(cardTransferDTO.getPurpose());</span>
+<span class="nc" id="L69">        cardTransferDTO3.setAccountDetailsId(cardTransferDTO.getAccountDetailsId());</span>
 
-<span class="nc" id="L71">        return mapper.cardTransferDTOToCardTransfer(cardTransfer);</span>
+<span class="nc" id="L71">        return mapper.cardTransferDTOToCardTransfer(cardTransferDTO3);</span>
     }
 
     @Override

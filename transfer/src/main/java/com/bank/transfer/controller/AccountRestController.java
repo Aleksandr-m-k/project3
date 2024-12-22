@@ -59,13 +59,12 @@ public class AccountRestController {
 
     }
 
-
     @PutMapping("/{id}")
-    public ResponseEntity<AccountTransfer> updateAccountTransfer(@RequestBody AccountTransferDTO accountTransferDTO,
+    public AccountTransfer updateAccountTransfer(@RequestBody AccountTransferDTO accountTransferDTO,
                                                                  @PathVariable("id") long id) {
         final AccountTransfer accountTransferUpdate =
                 accountTransferService.updateAccountTransferById(accountTransferDTO, id);
-        return new ResponseEntity<>(accountTransferUpdate, HttpStatus.OK);
+        return accountTransferUpdate;
     }
 
     @DeleteMapping("/{id}")

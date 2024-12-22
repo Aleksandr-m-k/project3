@@ -15,18 +15,21 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
+import static com.bank.transfer.aspects.OperationTypes.CREATE;
+
 @Component
 @Aspect
 public class AuditAspect {
-    private static final String OPERATION_TYPE_CREATE = "CREATE";
+    //    private static final String OPERATION_TYPE_CREATE = "CREATE";
     private final AuditRepository auditRepository; // Репозиторий для аудита
-    private final ObjectMapper objectMapper; // ObjectMapper для преобразования в JSON
+    private final ObjectMapper objectMapper;
 
     @Autowired
-    public AuditAspect(AuditRepository auditRepository) {
+    public AuditAspect(AuditRepository auditRepository, ObjectMapper objectMapper) {
         this.auditRepository = auditRepository;
-        this.objectMapper = new ObjectMapper(); // Инициализация ObjectMapper
+        this.objectMapper = objectMapper;
     }
+
 
     @Pointcut("execution(* save*Transfer(..))")
     public void createMethod() {
@@ -36,9 +39,11 @@ public class AuditAspect {
     public void updateMethod() {
     }
 
+
     @AfterReturning(value = "createMethod()", returning = "result")
     public void runSaveMethods(Object result) {
         final Long id = extractId(result);
+        System.out.println(result);
         String jsonString = null;
         try {
             jsonString = objectMapper.writeValueAsString(result);
@@ -48,7 +53,7 @@ public class AuditAspect {
 
         final Audit audit = Audit.builder()
                 .entityType(result.getClass().getSimpleName())
-                .operationType(OPERATION_TYPE_CREATE)
+                .operationType(OperationTypes.CREATE.name())
                 .createdBy(String.valueOf(id))
                 .createdAt(LocalDateTime.now())
                 .entityJson(jsonString)
@@ -58,35 +63,37 @@ public class AuditAspect {
         System.out.println("Audit saved: " + audit);
     }
 
-//    @AfterReturning(value = "updateMethod()", returning = "result")
-//    public void runUpdateMethods(Object result) {
-//        final String entityType = result.getClass().getSimpleName();
-//        String jsonString = null;
-//        final Long id = extractId(result);
-//        try {
-//            jsonString = objectMapper.writeValueAsString(result);
-//        } catch (JsonProcessingException e) {
-//            e.printStackTrace(); // Обработка исключения
-//        }
-//        final String createByString = String.valueOf(id);
-//        final Audit audit = auditRepository.findByCreatedByAndOperationType(createByString,
-//                OPERATION_TYPE_CREATE);
-//
-//
-//        final Audit updateAudit = Audit.builder()
-//                .entityType(entityType)
-//                .operationType("UPDATE")
-//                .createdBy(audit.getCreatedBy())
-//                .modifiedBy(String.valueOf(id))
-//                .createdAt(audit.getCreatedAt())
-//                .modifiedAt(LocalDateTime.now())
-//                .newEntityJson(jsonString)
-//                .entityJson(audit.getEntityJson())
-//                .build();
-//
-//        auditRepository.save(updateAudit);
-//        System.out.println(updateAudit);
-//    }
+    @AfterReturning(value = "updateMethod()", returning = "result")
+    public void runUpdateMethods(Object result) {
+        final String entityType = result.getClass().getSimpleName();
+        System.out.println(result);
+        System.out.println(entityType);
+        System.out.println(result);
+        String jsonString = null;
+        final Long id = extractId(result);
+//        final Long id = 106L;
+        try {
+            jsonString = objectMapper.writeValueAsString(result);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace(); // Обработка исключения
+        }
+        final String createByString = String.valueOf(id);
+        final Audit audit = auditRepository.findByCreatedByAndOperationType(createByString, CREATE.name());
+
+        final Audit updateAudit = Audit.builder()
+                .entityType(entityType)
+                .operationType(OperationTypes.UPDATE.name())
+                .createdBy(audit.getCreatedBy())
+                .modifiedBy(String.valueOf(id))
+                .createdAt(audit.getCreatedAt())
+                .modifiedAt(LocalDateTime.now())
+                .newEntityJson(jsonString)
+                .entityJson(audit.getEntityJson())
+                .build();
+
+        auditRepository.save(updateAudit);
+        System.out.println(updateAudit);
+    }
 
     private Long extractId(Object result) {
         if (result instanceof AccountTransfer) {

@@ -1,5 +1,15 @@
+com/bank/transfer/exception/EntityIncorrectDataTest.class
 com/bank/transfer/TransferApplicationTest.class
 com/bank/transfer/entity/CardTransferTest.class
 com/bank/transfer/entity/AccountTransferTest.class
+com/bank/transfer/mapper/PhoneTransferMapperTest.class
+com/bank/transfer/serviceImpl/PhoneTransferServiceImplTest.class
+com/bank/transfer/controller/PhoneRestControllerTest.class
 com/bank/transfer/serviceImpl/AccountTransferServiceImplTest.class
+com/bank/transfer/serviceImpl/CardTransferServiceImplTest.class
+com/bank/transfer/controller/CardRestControllerTest.class
 com/bank/transfer/entity/PhoneTransferTest.class
+com/bank/transfer/mapper/AccountTransferMapperTest.class
+com/bank/transfer/controller/AccountRestControllerTest.class
+com/bank/transfer/mapper/CardTransferMapperTest.class
+com/bank/transfer/exception/EntityGlobalExceptionTest.class

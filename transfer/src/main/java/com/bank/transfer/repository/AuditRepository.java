@@ -4,7 +4,6 @@ import com.bank.transfer.entity.Audit;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AuditRepository extends JpaRepository<Audit, Long> {
-    Audit findByCreatedByAndOperationType(String createAt, String operationType);
-
+    Audit findByCreatedByAndOperationType(String createdBy, String operationType);
 
 }

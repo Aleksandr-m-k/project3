@@ -59,16 +59,16 @@ public class CardTransferServiceImpl implements CardTransferService {
 
         final Optional<CardTransferDTO> optionalCardTransferDTO = getCardTransferById(id);
 
-        final CardTransferDTO cardTransfer = optionalCardTransferDTO.orElseThrow(() ->
+        final CardTransferDTO cardTransferDTO3 = optionalCardTransferDTO.orElseThrow(() ->
                 new EntityNotFoundException("CardTransfer not found for id: " + id));
 
 
-        cardTransfer.setCardNumber(cardTransferDTO.getCardNumber());
-        cardTransfer.setAmount(cardTransferDTO.getAmount());
-        cardTransfer.setPurpose(cardTransferDTO.getPurpose());
-        cardTransfer.setAccountDetailsId(cardTransferDTO.getAccountDetailsId());
+        cardTransferDTO3.setCardNumber(cardTransferDTO.getCardNumber());
+        cardTransferDTO3.setAmount(cardTransferDTO.getAmount());
+        cardTransferDTO3.setPurpose(cardTransferDTO.getPurpose());
+        cardTransferDTO3.setAccountDetailsId(cardTransferDTO.getAccountDetailsId());
 
-        return mapper.cardTransferDTOToCardTransfer(cardTransfer);
+        return mapper.cardTransferDTOToCardTransfer(cardTransferDTO3);
     }
 
     @Override

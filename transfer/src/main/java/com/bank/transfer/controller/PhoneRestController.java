@@ -57,10 +57,10 @@ public class PhoneRestController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<PhoneTransfer> updatePhoneTransfer(@RequestBody PhoneTransferDTO phoneTransferDTO,
+    public PhoneTransfer updatePhoneTransfer(@RequestBody PhoneTransferDTO phoneTransferDTO,
                                                              @PathVariable("id") long id) {
         final PhoneTransfer phoneTransferUpdate = phoneTransferService.updatePhoneTransferById(phoneTransferDTO, id);
-        return new ResponseEntity<>(phoneTransferUpdate, HttpStatus.OK);
+        return phoneTransferUpdate;
     }
 
     @DeleteMapping("/{id}")

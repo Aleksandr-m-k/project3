@@ -57,10 +57,10 @@ public class CardRestController {
 
 
     @PutMapping(&quot;/{id}&quot;)
-    public ResponseEntity&lt;CardTransfer&gt; updateCardTransfer(@RequestBody CardTransferDTO cardTransferDTO,
+    public CardTransfer updateCardTransfer(@RequestBody CardTransferDTO cardTransferDTO,
                                                            @PathVariable(&quot;id&quot;) long id) {
 <span class="fc" id="L62">        final CardTransfer cardTransferUpdate = cardTransferService.updateCardTransferById(cardTransferDTO, id);</span>
-<span class="fc" id="L63">        return new ResponseEntity&lt;&gt;(cardTransferUpdate, HttpStatus.OK);</span>
+<span class="fc" id="L63">        return cardTransferUpdate;</span>
     }
 
     @DeleteMapping(&quot;/{id}&quot;)
