@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="9.3">
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/dto/CardTransferDTO.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/dto/PhoneTransferDTO.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/dto/AuditDTO.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/dto/AccountTransferDTO.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/handler/GlobalExceptionHandler.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/repository/CardTransferRepository.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/repository/PhoneTransferRepository.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/repository/AccountTransferRepository.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/repository/AuditRepository.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/TransferApplication.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/config/SwaggerTransferConfig.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/entity/PhoneTransfer.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/entity/CardTransfer.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/entity/AccountTransfer.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/entity/Audit.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/mapper/PhoneTransferMapper.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/mapper/CardTransferMapper.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/mapper/AccountTransferMapper.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/mapper/AuditMapper.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/controller/AuditRestController.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/controller/CardRestController.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/controller/AccountRestController.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/controller/PhoneRestController.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/service/impl/AuditServiceImpl.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/service/impl/PhoneTransferServiceImpl.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/service/impl/AccountTransferServiceImpl.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/service/impl/CardTransferServiceImpl.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/service/CardTransferService.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/service/PhoneTransferService.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/service/AccountTransferService.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/service/AuditService.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/aspects/AuditAspect.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/aspects/OperationTypes.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/exception/NoSuchEntityException.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/exception/EntityIncorrectData.java">
+</file>
+<file name="/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/exception/EntityGlobalException.java">
+</file>
+</checkstyle>

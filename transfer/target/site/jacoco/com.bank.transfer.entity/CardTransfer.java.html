@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CardTransfer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">transfer</a> &gt; <a href="index.source.html" class="el_package">com.bank.transfer.entity</a> &gt; <span class="el_source">CardTransfer.java</span></div><h1>CardTransfer.java</h1><pre class="source lang-java linenums">package com.bank.transfer.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
+
+@Entity
+@Table(name = &quot;card_transfer&quot;, schema = &quot;transfer&quot;)
+<span class="fc" id="L21">@ToString</span>
+<span class="fc" id="L22">@Setter</span>
+@Getter
+<span class="fc" id="L24">@NoArgsConstructor</span>
+<span class="fc" id="L25">@AllArgsConstructor</span>
+<span class="pc" id="L26">@Builder</span>
+public class CardTransfer {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+<span class="fc" id="L31">    private Long id;</span>
+
+    @NotNull
+    @Column(name = &quot;card_number&quot;, unique = true)
+<span class="fc" id="L35">    private Long cardNumber;</span>
+
+    @NotNull
+<span class="fc" id="L38">    private BigDecimal amount;</span>
+
+<span class="fc" id="L40">    private String purpose;</span>
+
+    @NotNull
+    @Column(name = &quot;account_details_id&quot;)
+<span class="fc" id="L44">    private Long accountDetailsId;</span>
+
+<span class="fc" id="L46">    public CardTransfer(Long cardNumber, BigDecimal amount, String purpose, Long accountDetailsId) {</span>
+<span class="fc" id="L47">        this.cardNumber = cardNumber;</span>
+<span class="fc" id="L48">        this.amount = amount;</span>
+<span class="fc" id="L49">        this.purpose = purpose;</span>
+<span class="fc" id="L50">        this.accountDetailsId = accountDetailsId;</span>
+<span class="fc" id="L51">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

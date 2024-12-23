@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuditAspect.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">transfer</a> &gt; <a href="index.source.html" class="el_package">com.bank.transfer.aspects</a> &gt; <span class="el_source">AuditAspect.java</span></div><h1>AuditAspect.java</h1><pre class="source lang-java linenums">package com.bank.transfer.aspects;
+
+import com.bank.transfer.entity.AccountTransfer;
+import com.bank.transfer.entity.Audit;
+import com.bank.transfer.entity.CardTransfer;
+import com.bank.transfer.entity.PhoneTransfer;
+import com.bank.transfer.repository.AuditRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
+
+import static com.bank.transfer.aspects.OperationTypes.CREATE;
+
+@Component
+@Aspect
+public class AuditAspect {
+    private final AuditRepository auditRepository; // Репозиторий для аудита
+    private final ObjectMapper objectMapper;
+
+    @Autowired
+<span class="fc" id="L27">    public AuditAspect(AuditRepository auditRepository, ObjectMapper objectMapper) {</span>
+<span class="fc" id="L28">        this.auditRepository = auditRepository;</span>
+<span class="fc" id="L29">        this.objectMapper = objectMapper;</span>
+<span class="fc" id="L30">    }</span>
+
+
+    @Pointcut(&quot;execution(* save*Transfer(..))&quot;)
+    public void createMethod() {
+<span class="nc" id="L35">    }</span>
+
+    @Pointcut(&quot;execution(* update*Transfer(..))&quot;)
+    public void updateMethod() {
+<span class="nc" id="L39">    }</span>
+
+
+    @AfterReturning(value = &quot;createMethod()&quot;, returning = &quot;result&quot;)
+    public void runSaveMethods(Object result) {
+<span class="fc" id="L44">        final Long id = extractId(result);</span>
+<span class="fc" id="L45">        System.out.println(result);</span>
+<span class="fc" id="L46">        String jsonString = null;</span>
+        try {
+<span class="fc" id="L48">            jsonString = objectMapper.writeValueAsString(result);</span>
+<span class="nc" id="L49">        } catch (JsonProcessingException e) {</span>
+<span class="nc" id="L50">            e.printStackTrace(); // Обработка исключения</span>
+<span class="fc" id="L51">        }</span>
+
+<span class="fc" id="L53">        final Audit audit = Audit.builder()</span>
+<span class="fc" id="L54">                .entityType(result.getClass().getSimpleName())</span>
+<span class="fc" id="L55">                .operationType(OperationTypes.CREATE.name())</span>
+<span class="fc" id="L56">                .createdBy(String.valueOf(id))</span>
+<span class="fc" id="L57">                .createdAt(LocalDateTime.now())</span>
+<span class="fc" id="L58">                .entityJson(jsonString)</span>
+<span class="fc" id="L59">                .build();</span>
+
+<span class="fc" id="L61">        auditRepository.save(audit);</span>
+<span class="fc" id="L62">        System.out.println(&quot;Audit saved: &quot; + audit);</span>
+<span class="fc" id="L63">    }</span>
+
+    @AfterReturning(value = &quot;updateMethod()&quot;, returning = &quot;result&quot;)
+    public void runUpdateMethods(Object result) {
+<span class="nc" id="L67">        final String entityType = result.getClass().getSimpleName();</span>
+<span class="nc" id="L68">        System.out.println(result);</span>
+<span class="nc" id="L69">        System.out.println(entityType);</span>
+<span class="nc" id="L70">        System.out.println(result);</span>
+<span class="nc" id="L71">        String jsonString = null;</span>
+<span class="nc" id="L72">        final Long id = extractId(result);</span>
+        try {
+<span class="nc" id="L74">            jsonString = objectMapper.writeValueAsString(result);</span>
+<span class="nc" id="L75">        } catch (JsonProcessingException e) {</span>
+<span class="nc" id="L76">            e.printStackTrace(); // Обработка исключения</span>
+<span class="nc" id="L77">        }</span>
+<span class="nc" id="L78">        final String createByString = String.valueOf(id);</span>
+<span class="nc" id="L79">        final Audit audit = auditRepository.findByCreatedByAndOperationType(createByString, CREATE.name());</span>
+
+<span class="nc" id="L81">        final Audit updateAudit = Audit.builder()</span>
+<span class="nc" id="L82">                .entityType(entityType)</span>
+<span class="nc" id="L83">                .operationType(OperationTypes.UPDATE.name())</span>
+<span class="nc" id="L84">                .createdBy(audit.getCreatedBy())</span>
+<span class="nc" id="L85">                .modifiedBy(String.valueOf(id))</span>
+<span class="nc" id="L86">                .createdAt(audit.getCreatedAt())</span>
+<span class="nc" id="L87">                .modifiedAt(LocalDateTime.now())</span>
+<span class="nc" id="L88">                .newEntityJson(jsonString)</span>
+<span class="nc" id="L89">                .entityJson(audit.getEntityJson())</span>
+<span class="nc" id="L90">                .build();</span>
+
+<span class="nc" id="L92">        auditRepository.save(updateAudit);</span>
+<span class="nc" id="L93">        System.out.println(updateAudit);</span>
+<span class="nc" id="L94">    }</span>
+
+    private Long extractId(Object result) {
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">        if (result instanceof AccountTransfer) {</span>
+<span class="fc" id="L98">            return ((AccountTransfer) result).getId();</span>
+<span class="nc bnc" id="L99" title="All 2 branches missed.">        } else if (result instanceof PhoneTransfer) {</span>
+<span class="nc" id="L100">            return ((PhoneTransfer) result).getId();</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">        } else if (result instanceof CardTransfer) {</span>
+<span class="nc" id="L102">            return ((CardTransfer) result).getId();</span>
+        }
+<span class="nc" id="L104">        return null;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

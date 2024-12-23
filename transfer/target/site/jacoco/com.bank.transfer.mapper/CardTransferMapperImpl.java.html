@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CardTransferMapperImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">transfer</a> &gt; <a href="index.source.html" class="el_package">com.bank.transfer.mapper</a> &gt; <span class="el_source">CardTransferMapperImpl.java</span></div><h1>CardTransferMapperImpl.java</h1><pre class="source lang-java linenums">package com.bank.transfer.mapper;
+
+import com.bank.transfer.dto.CardTransferDTO;
+import com.bank.transfer.entity.CardTransfer;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = &quot;org.mapstruct.ap.MappingProcessor&quot;,
+    date = &quot;2024-12-23T19:37:24+0200&quot;,
+    comments = &quot;version: 1.5.3.Final, compiler: javac, environment: Java 17.0.13 (Amazon.com Inc.)&quot;
+)
+@Component
+<span class="fc" id="L16">public class CardTransferMapperImpl implements CardTransferMapper {</span>
+
+    @Override
+    public CardTransferDTO cardTransferToCardTransferDTO(CardTransfer cardTransfer) {
+<span class="pc bpc" id="L20" title="1 of 2 branches missed.">        if ( cardTransfer == null ) {</span>
+<span class="nc" id="L21">            return null;</span>
+        }
+
+<span class="fc" id="L24">        CardTransferDTO.CardTransferDTOBuilder cardTransferDTO = CardTransferDTO.builder();</span>
+
+<span class="fc" id="L26">        cardTransferDTO.id( cardTransfer.getId() );</span>
+<span class="fc" id="L27">        cardTransferDTO.cardNumber( cardTransfer.getCardNumber() );</span>
+<span class="fc" id="L28">        cardTransferDTO.amount( cardTransfer.getAmount() );</span>
+<span class="fc" id="L29">        cardTransferDTO.purpose( cardTransfer.getPurpose() );</span>
+<span class="fc" id="L30">        cardTransferDTO.accountDetailsId( cardTransfer.getAccountDetailsId() );</span>
+
+<span class="fc" id="L32">        return cardTransferDTO.build();</span>
+    }
+
+    @Override
+    public CardTransfer cardTransferDTOToCardTransfer(CardTransferDTO cardTransferDTO) {
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        if ( cardTransferDTO == null ) {</span>
+<span class="nc" id="L38">            return null;</span>
+        }
+
+<span class="fc" id="L41">        CardTransfer.CardTransferBuilder cardTransfer = CardTransfer.builder();</span>
+
+<span class="fc" id="L43">        cardTransfer.id( cardTransferDTO.getId() );</span>
+<span class="fc" id="L44">        cardTransfer.cardNumber( cardTransferDTO.getCardNumber() );</span>
+<span class="fc" id="L45">        cardTransfer.amount( cardTransferDTO.getAmount() );</span>
+<span class="fc" id="L46">        cardTransfer.purpose( cardTransferDTO.getPurpose() );</span>
+<span class="fc" id="L47">        cardTransfer.accountDetailsId( cardTransferDTO.getAccountDetailsId() );</span>
+
+<span class="fc" id="L49">        return cardTransfer.build();</span>
+    }
+
+    @Override
+    public List&lt;CardTransferDTO&gt; cardTransferListToDTOList(List&lt;CardTransfer&gt; cardTransfers) {
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        if ( cardTransfers == null ) {</span>
+<span class="nc" id="L55">            return null;</span>
+        }
+
+<span class="fc" id="L58">        List&lt;CardTransferDTO&gt; list = new ArrayList&lt;CardTransferDTO&gt;( cardTransfers.size() );</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        for ( CardTransfer cardTransfer : cardTransfers ) {</span>
+<span class="fc" id="L60">            list.add( cardTransferToCardTransferDTO( cardTransfer ) );</span>
+<span class="fc" id="L61">        }</span>
+
+<span class="fc" id="L63">        return list;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AccountTransferMapperImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">transfer</a> &gt; <a href="index.source.html" class="el_package">com.bank.transfer.mapper</a> &gt; <span class="el_source">AccountTransferMapperImpl.java</span></div><h1>AccountTransferMapperImpl.java</h1><pre class="source lang-java linenums">package com.bank.transfer.mapper;
+
+import com.bank.transfer.dto.AccountTransferDTO;
+import com.bank.transfer.entity.AccountTransfer;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.processing.Generated;
+import org.springframework.stereotype.Component;
+
+@Generated(
+    value = &quot;org.mapstruct.ap.MappingProcessor&quot;,
+    date = &quot;2024-12-23T19:37:24+0200&quot;,
+    comments = &quot;version: 1.5.3.Final, compiler: javac, environment: Java 17.0.13 (Amazon.com Inc.)&quot;
+)
+@Component
+<span class="fc" id="L16">public class AccountTransferMapperImpl implements AccountTransferMapper {</span>
+
+    @Override
+    public AccountTransferDTO accountTransferToAccountTransferDTO(AccountTransfer accountTransfer) {
+<span class="pc bpc" id="L20" title="1 of 2 branches missed.">        if ( accountTransfer == null ) {</span>
+<span class="nc" id="L21">            return null;</span>
+        }
+
+<span class="fc" id="L24">        AccountTransferDTO.AccountTransferDTOBuilder accountTransferDTO = AccountTransferDTO.builder();</span>
+
+<span class="fc" id="L26">        accountTransferDTO.id( accountTransfer.getId() );</span>
+<span class="fc" id="L27">        accountTransferDTO.accountNumber( accountTransfer.getAccountNumber() );</span>
+<span class="fc" id="L28">        accountTransferDTO.amount( accountTransfer.getAmount() );</span>
+<span class="fc" id="L29">        accountTransferDTO.purpose( accountTransfer.getPurpose() );</span>
+<span class="fc" id="L30">        accountTransferDTO.accountDetailsId( accountTransfer.getAccountDetailsId() );</span>
+
+<span class="fc" id="L32">        return accountTransferDTO.build();</span>
+    }
+
+    @Override
+    public AccountTransfer accountTransferDTOToAccountTransfer(AccountTransferDTO accountTransferDTO) {
+<span class="pc bpc" id="L37" title="1 of 2 branches missed.">        if ( accountTransferDTO == null ) {</span>
+<span class="nc" id="L38">            return null;</span>
+        }
+
+<span class="fc" id="L41">        AccountTransfer.AccountTransferBuilder accountTransfer = AccountTransfer.builder();</span>
+
+<span class="fc" id="L43">        accountTransfer.id( accountTransferDTO.getId() );</span>
+<span class="fc" id="L44">        accountTransfer.accountNumber( accountTransferDTO.getAccountNumber() );</span>
+<span class="fc" id="L45">        accountTransfer.amount( accountTransferDTO.getAmount() );</span>
+<span class="fc" id="L46">        accountTransfer.purpose( accountTransferDTO.getPurpose() );</span>
+<span class="fc" id="L47">        accountTransfer.accountDetailsId( accountTransferDTO.getAccountDetailsId() );</span>
+
+<span class="fc" id="L49">        return accountTransfer.build();</span>
+    }
+
+    @Override
+    public List&lt;AccountTransferDTO&gt; accountTransferListToDTOList(List&lt;AccountTransfer&gt; accountTransfers) {
+<span class="pc bpc" id="L54" title="1 of 2 branches missed.">        if ( accountTransfers == null ) {</span>
+<span class="nc" id="L55">            return null;</span>
+        }
+
+<span class="fc" id="L58">        List&lt;AccountTransferDTO&gt; list = new ArrayList&lt;AccountTransferDTO&gt;( accountTransfers.size() );</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        for ( AccountTransfer accountTransfer : accountTransfers ) {</span>
+<span class="fc" id="L60">            list.add( accountTransferToAccountTransferDTO( accountTransfer ) );</span>
+<span class="fc" id="L61">        }</span>
+
+<span class="fc" id="L63">        return list;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
