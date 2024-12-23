@@ -4,6 +4,7 @@ import com.bank.transfer.dto.AuditDTO;
 import com.bank.transfer.entity.Audit;
 import com.bank.transfer.mapper.AuditMapper;
 import com.bank.transfer.repository.AuditRepository;
+import com.bank.transfer.service.impl.AuditServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

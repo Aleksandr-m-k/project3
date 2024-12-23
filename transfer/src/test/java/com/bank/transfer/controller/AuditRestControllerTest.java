@@ -3,22 +3,19 @@ package com.bank.transfer.controller;
 import com.bank.transfer.aspects.AuditAspect;
 import com.bank.transfer.dto.AuditDTO;
 import com.bank.transfer.entity.Audit;
-import com.bank.transfer.serviceImpl.AuditServiceImpl;
+import com.bank.transfer.service.impl.AuditServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -26,8 +23,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(AuditRestController.class)
 class AuditRestControllerTest {
 
-
-    private static final Long ID = 1L;
+    private static final Long ID1 = 1L;
+    private static final Long ID2 = 2L;
 
     @Autowired
     private MockMvc mockMvc;
@@ -50,7 +47,7 @@ class AuditRestControllerTest {
     @BeforeEach
     public void creatNewAudit() {
         audit1 = Audit.builder()
-                .id(1L)
+                .id(ID1)
                 .entityType("AccountTransfer")
                 .operationType("UPDATE")
                 .createdBy("111")
@@ -63,7 +60,7 @@ class AuditRestControllerTest {
                         "\"purpose\":\"ivan ivanov\",\"accountDetailsId\":5}")
                 .build();
         audit2 = Audit.builder()
-                .id(2L)
+                .id(ID2)
                 .entityType("AccountTransfer")
                 .operationType("UPDATE")
                 .createdBy("11")
@@ -76,7 +73,7 @@ class AuditRestControllerTest {
                         "\"purpose\":\"ivan ivanov\",\"accountDetailsId\":5}")
                 .build();
         auditDTO1 = AuditDTO.builder()
-                .id(1L)
+                .id(ID1)
                 .entityType("AccountTransfer")
                 .operationType("UPDATE")
                 .createdBy("111")
@@ -89,7 +86,7 @@ class AuditRestControllerTest {
                         "\"purpose\":\"ivan ivanov\",\"accountDetailsId\":5}")
                 .build();
         auditDTO2 = AuditDTO.builder()
-                .id(2L)
+                .id(ID2)
                 .entityType("AccountTransfer")
                 .operationType("UPDATE")
                 .createdBy("11")

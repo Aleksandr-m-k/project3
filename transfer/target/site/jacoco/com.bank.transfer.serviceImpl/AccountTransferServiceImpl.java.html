@@ -59,7 +59,7 @@ public class AccountTransferServiceImpl implements AccountTransferService {
 
 <span class="fc" id="L60">        final Optional&lt;AccountTransferDTO&gt; optionalAccountTransfer = getAccountTransferById(id);</span>
 <span class="nc" id="L61">        final AccountTransferDTO accountTransfer = optionalAccountTransfer.orElseThrow(() -&gt;</span>
-<span class="fc" id="L62">                new EntityNotFoundException(&quot;CardTransfer not found for id: &quot; + id));</span>
+<span class="fc" id="L62">                new EntityNotFoundException(&quot;AccountTransfer not found for id: &quot; + id));</span>
 
 <span class="nc" id="L64">        accountTransfer.setAccountNumber(accountTransferDTO.getAccountNumber());</span>
 <span class="nc" id="L65">        accountTransfer.setAmount(accountTransferDTO.getAmount());</span>

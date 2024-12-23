@@ -3,7 +3,7 @@ package com.bank.transfer.controller;
 import com.bank.transfer.aspects.AuditAspect;
 import com.bank.transfer.dto.AccountTransferDTO;
 import com.bank.transfer.entity.AccountTransfer;
-import com.bank.transfer.serviceImpl.AccountTransferServiceImpl;
+import com.bank.transfer.service.impl.AccountTransferServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package com.bank.transfer.serviceImpl;
+package com.bank.transfer.service.impl;
 
 import com.bank.transfer.dto.PhoneTransferDTO;
 import com.bank.transfer.entity.PhoneTransfer;

@@ -20,7 +20,6 @@ import static com.bank.transfer.aspects.OperationTypes.CREATE;
 @Component
 @Aspect
 public class AuditAspect {
-    //    private static final String OPERATION_TYPE_CREATE = "CREATE";
     private final AuditRepository auditRepository; // Репозиторий для аудита
     private final ObjectMapper objectMapper;
 
@@ -71,7 +70,6 @@ public class AuditAspect {
         System.out.println(result);
         String jsonString = null;
         final Long id = extractId(result);
-//        final Long id = 106L;
         try {
             jsonString = objectMapper.writeValueAsString(result);
         } catch (JsonProcessingException e) {
@@ -103,6 +101,6 @@ public class AuditAspect {
         } else if (result instanceof CardTransfer) {
             return ((CardTransfer) result).getId();
         }
-        return null; // Обработка случая, когда ID отсутствует
+        return null;
     }
 }

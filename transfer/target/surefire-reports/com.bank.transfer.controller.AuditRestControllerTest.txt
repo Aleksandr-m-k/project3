@@ -1,10 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.bank.transfer.controller.AuditRestControllerTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 11.244 s <<< FAILURE! - in com.bank.transfer.controller.AuditRestControllerTest
-getAccountTransferByIdTest  Time elapsed: 0.466 s  <<< ERROR!
-com.fasterxml.jackson.databind.exc.InvalidDefinitionException: 
-Java 8 date/time type `java.time.LocalDateTime` not supported by default: add Module "com.fasterxml.jackson.datatype:jackson-datatype-jsr310" to enable handling
- at [Source: (String)"{"id":1,"entityType":"AccountTransfer","operationType":"UPDATE","createdBy":"111","modifiedBy":"111","createdAt":"2024-12-22T12:36:46.594599","modifiedAt":"2024-12-22T12:40:28.096895","newEntityJson":"{\"id\":111,\"accountNumber\":314681,\"amount\":347574.34,\"purpose\":\"ivan ivanov\",\"accountDetailsId\":5}","entityJson":"{\"id\":111,\"accountNumber\":311,\"amount\":347574.34,\"purpose\":\"ivan ivanov\",\"accountDetailsId\":5}"}"; line: 1, column: 114] (through reference chain: com.bank.transfer.entity.Audit["createdAt"])
-	at com.bank.transfer.controller.AuditRestControllerTest.getAccountTransferByIdTest(AuditRestControllerTest.java:122)
-
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 16.998 s - in com.bank.transfer.controller.AuditRestControllerTest

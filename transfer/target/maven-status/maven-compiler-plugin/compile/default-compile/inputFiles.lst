@@ -30,7 +30,6 @@
 /Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/entity/CardTransfer.java
 /Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/mapper/PhoneTransferMapper.java
 /Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/TransferApplication.java
-/Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/config/JacksonConfig.java
 /Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/service/AccountTransferService.java
 /Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/aspects/OperationTypes.java
 /Users/aleksandr/Desktop/kata academy/project3/transfer/src/main/java/com/bank/transfer/mapper/CardTransferMapper.java
